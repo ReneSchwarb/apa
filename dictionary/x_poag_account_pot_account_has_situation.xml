@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Account has Situation" max_length="40" name="x_poag_account_pot_account_has_situation" type="collection">
+        <element label="Account" max_length="32" name="account" reference="x_poag_account_pot_account" type="reference"/>
+        <element label="Checked" max_length="40" name="checked" type="boolean"/>
+        <element label="Comment" max_length="300" name="comment" type="string"/>
+        <element label="Situation" max_length="32" name="situation" reference="x_poag_account_pot_situation" reference_floats="true" type="reference"/>
+        <index name="index">
+            <element name="account"/>
+        </index>
+        <index name="index2">
+            <element name="situation"/>
+        </index>
+    </element>
+</database>

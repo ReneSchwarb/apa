@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Situation of Topic" max_length="40" name="x_poag_account_pot_situation_of_topic" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Description" max_length="100" name="description" type="string"/>
+        <element label="Situation" max_length="32" name="situation" reference="x_poag_account_pot_situation" reference_floats="true" type="reference"/>
+        <element label="Topic" max_length="32" name="topic" reference="x_poag_account_pot_topic" reference_floats="true" type="reference"/>
+        <index name="index">
+            <element name="topic"/>
+        </index>
+        <index name="index2">
+            <element name="situation"/>
+        </index>
+    </element>
+</database>

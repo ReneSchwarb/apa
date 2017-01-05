@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Account Has Challenge" max_length="40" name="x_poag_account_pot_accounthaschallenge" type="collection">
+        <element label="Account" max_length="32" name="account" reference="x_poag_account_pot_account" type="reference"/>
+        <element display="true" label="Challenge" max_length="32" name="challenge" reference="x_poag_account_pot_challenge" reference_floats="true" type="reference"/>
+        <element label="Checked" max_length="40" name="checked" type="boolean"/>
+        <index name="index">
+            <element name="challenge"/>
+        </index>
+        <index name="index2">
+            <element name="account"/>
+        </index>
+    </element>
+</database>

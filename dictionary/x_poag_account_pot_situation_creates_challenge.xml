@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Situation creates Challenge" max_length="40" name="x_poag_account_pot_situation_creates_challenge" type="collection">
+        <element display="true" label="Challenge" max_length="32" name="challenge" reference="x_poag_account_pot_challenge" reference_floats="true" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Description" max_length="100" name="description" type="string"/>
+        <element label="Reason" max_length="200" name="reason" type="string"/>
+        <element label="Situation" max_length="32" name="situation" reference="x_poag_account_pot_situation" reference_floats="true" type="reference"/>
+        <index name="index">
+            <element name="challenge"/>
+        </index>
+        <index name="index2">
+            <element name="situation"/>
+        </index>
+    </element>
+</database>

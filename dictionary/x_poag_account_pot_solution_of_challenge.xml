@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Solution of Challenge" max_length="40" name="x_poag_account_pot_solution_of_challenge" type="collection">
+        <element label="Challenge" max_length="32" name="challenge" reference="x_poag_account_pot_challenge" reference_floats="true" type="reference"/>
+        <element label="Checked" max_length="40" name="checked" type="boolean"/>
+        <element label="Comment" max_length="300" name="comment" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Description" max_length="40" name="description" type="string"/>
+        <element label="Solution" max_length="32" name="solution" reference="x_poag_account_pot_solution" reference_floats="true" type="reference"/>
+        <index name="index">
+            <element name="solution"/>
+        </index>
+        <index name="index2">
+            <element name="challenge"/>
+        </index>
+    </element>
+</database>

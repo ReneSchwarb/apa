@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="m2m_sp_widget_dependency">
+    <m2m_sp_widget_dependency action="INSERT_OR_UPDATE">
+        <sp_dependency display_value="ng-sortable">660c4324cb31120000f8d856634c9cb8</sp_dependency>
+        <sp_widget display_value="Account Potential Analyse">7fc988414f5a62002ed2bc511310c7c1</sp_widget>
+        <sys_class_name>m2m_sp_widget_dependency</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2016-12-11 10:50:26</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>876862fa4faf26002ed2bc511310c7b8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ng-sortable.Account Potential Analyse</sys_name>
+        <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
+        <sys_update_name>m2m_sp_widget_dependency_876862fa4faf26002ed2bc511310c7b8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2016-12-11 10:50:26</sys_updated_on>
+    </m2m_sp_widget_dependency>
+</record_update>

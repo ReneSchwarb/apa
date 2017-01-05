@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Solution need Skills" max_length="40" name="x_poag_account_pot_solution_need_skills" type="collection">
+        <element label="Skill Group" max_length="32" name="skill" reference="x_poag_account_pot_skill_group" reference_floats="true" type="reference"/>
+        <element label="Solution" max_length="32" name="solution" reference="x_poag_account_pot_solution" type="reference"/>
+        <index name="index">
+            <element name="solution"/>
+        </index>
+        <index name="index2">
+            <element name="skill"/>
+        </index>
+    </element>
+</database>

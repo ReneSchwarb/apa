@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Situation of Branche" max_length="40" name="x_poag_account_pot_situation_of_branche" type="collection">
+        <element label="Branche" max_length="32" name="branche" reference="x_poag_account_pot_branche" type="reference"/>
+        <element label="Relevance" max_length="1" name="relevance" type="integer"/>
+        <element label="Situation" max_length="32" name="situation" reference="x_poag_account_pot_situation" type="reference"/>
+        <index name="index">
+            <element name="branche"/>
+        </index>
+        <index name="index2">
+            <element name="situation"/>
+        </index>
+    </element>
+</database>

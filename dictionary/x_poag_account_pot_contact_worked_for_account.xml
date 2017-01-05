@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Contact worked for account" max_length="40" name="x_poag_account_pot_contact_worked_for_account" type="collection">
+        <element label="Account" max_length="32" name="account" reference="x_poag_account_pot_account" type="reference"/>
+        <element label="Comment" max_length="200" name="comment" type="string"/>
+        <element label="Contact" max_length="32" name="contact" reference="x_poag_account_pot_contact" reference_floats="true" type="reference"/>
+        <element label="FromYear" max_length="4" name="fromyear" type="integer"/>
+        <element label="Role" max_length="32" name="role" reference="x_poag_account_pot_role" type="reference"/>
+        <element label="ToYear" max_length="4" name="toyear" type="integer"/>
+        <index name="index">
+            <element name="role"/>
+        </index>
+        <index name="index2">
+            <element name="contact"/>
+        </index>
+        <index name="index3">
+            <element name="account"/>
+        </index>
+    </element>
+</database>

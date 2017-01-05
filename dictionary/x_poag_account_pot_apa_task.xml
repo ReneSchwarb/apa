@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element attributes="live_feed=true" extends="task" label="APA Task" max_length="40" name="x_poag_account_pot_apa_task" sizeclass="2" type="collection">
+        <element label="Account" max_length="32" name="account" reference="x_poag_account_pot_account" type="reference"/>
+        <element label="Contact" max_length="32" name="contact" reference="x_poag_account_pot_contact" type="reference"/>
+    </element>
+</database>

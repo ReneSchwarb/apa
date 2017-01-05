@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="state" table="x_poag_account_pot_account_and_topic" version="3">
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>state</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>no target</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account_and_topic</name>
+            <sequence>0</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-12-27 12:30:34</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>b1c81dc04f4836002ed2bc511310c799</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-12-27 12:30:34</sys_updated_on>
+            <value>no target</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>state</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>target</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account_and_topic</name>
+            <sequence>1</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-12-27 12:28:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>2f4811444f4836002ed2bc511310c771</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-12-27 12:30:34</sys_updated_on>
+            <value>target</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>state</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>lead</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account_and_topic</name>
+            <sequence>2</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-12-27 12:30:34</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>f5c81dc04f4836002ed2bc511310c799</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-12-27 12:30:34</sys_updated_on>
+            <value>lead</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>state</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>customer</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account_and_topic</name>
+            <sequence>3</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-12-27 12:30:34</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>b9c81dc04f4836002ed2bc511310c799</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-12-27 12:30:34</sys_updated_on>
+            <value>customer</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>state</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>reference</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account_and_topic</name>
+            <sequence>4</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-12-27 12:30:34</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>7dc81dc04f4836002ed2bc511310c799</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-12-27 12:30:34</sys_updated_on>
+            <value>reference</value>
+        </sys_choice>
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>state</element>
+            <name>x_poag_account_pot_account_and_topic</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-12-27 12:28:30</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>af4811444f4836002ed2bc511310c771</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_name>state</sys_name>
+            <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
+            <sys_update_name>sys_choice_x_poag_account_pot_account_and_topic_state</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-12-27 12:30:34</sys_updated_on>
+        </sys_choice_set>
+    </sys_choice>
+</record_update>

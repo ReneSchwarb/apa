@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element extends="sys_import_set_row" label="Import Contacts" max_length="40" name="u_import_contacts" type="collection">
+        <element attributes="import_attribute_name=Academic Title,edge_encryption_enabled=true" label="Academic Title" max_length="40" name="u_academic_title" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="AccountName" max_length="40" name="u_accountname" type="string"/>
+        <element attributes="import_attribute_name=Account Name,edge_encryption_enabled=true" label="Account Name" max_length="40" name="u_account_name" type="string"/>
+        <element attributes="import_attribute_name=Bereich,edge_encryption_enabled=true" label="Bereich" max_length="40" name="u_bereich" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Campaign Name" max_length="40" name="u_campaign_name" type="string"/>
+        <element attributes="import_attribute_name=City,edge_encryption_enabled=true" label="City" max_length="40" name="u_city" type="string"/>
+        <element attributes="import_attribute_name=Contact ID,edge_encryption_enabled=true" label="Contact ID" max_length="40" name="u_contact_id" type="string"/>
+        <element attributes="import_attribute_name=Dept.,edge_encryption_enabled=true" label="Dept." max_length="43" name="u_dept_" type="string"/>
+        <element attributes="import_attribute_name=Division,edge_encryption_enabled=true" label="Division" max_length="40" name="u_division" type="string"/>
+        <element attributes="import_attribute_name=Email,edge_encryption_enabled=true" label="Email" max_length="40" name="u_email" type="string"/>
+        <element attributes="import_attribute_name=Email Opt Out,edge_encryption_enabled=true" label="Email Opt Out" max_length="40" name="u_email_opt_out" type="string"/>
+        <element attributes="import_attribute_name=First Name,edge_encryption_enabled=true" label="First Name" max_length="40" name="u_first_name" type="string"/>
+        <element attributes="import_attribute_name=Function / Title,edge_encryption_enabled=true" label="Function / Title" max_length="44" name="u_function___title" type="string"/>
+        <element attributes="import_attribute_name=ipt Netzwerk,edge_encryption_enabled=true" label="ipt Netzwerk" max_length="56" name="u_ipt_netzwerk" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="ipt Netzwerk (Q)" max_length="40" name="u_ipt_netzwerk__q_" type="string"/>
+        <element attributes="import_attribute_name=Language,edge_encryption_enabled=true" label="Language" max_length="40" name="u_language" type="string"/>
+        <element attributes="import_attribute_name=Last Name,edge_encryption_enabled=true" label="Last Name" max_length="40" name="u_last_name" type="string"/>
+        <element attributes="import_attribute_name=Level,edge_encryption_enabled=true" label="Level" max_length="40" name="u_level" type="string"/>
+        <element attributes="import_attribute_name=Mobile,edge_encryption_enabled=true" label="Mobile" max_length="40" name="u_mobile" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Name" max_length="40" name="u_name" type="string"/>
+        <element attributes="import_attribute_name=Personal Interests,edge_encryption_enabled=true" label="Personal Interests" max_length="40" name="u_personal_interests" type="string"/>
+        <element attributes="import_attribute_name=Phone,edge_encryption_enabled=true" label="Phone" max_length="40" name="u_phone" type="string"/>
+        <element attributes="import_attribute_name=Reports To,edge_encryption_enabled=true" label="Reports To" max_length="40" name="u_reports_to" type="string"/>
+        <element attributes="import_attribute_name=Responsibility,edge_encryption_enabled=true" label="Responsibility" max_length="40" name="u_responsibility" type="string"/>
+        <element attributes="import_attribute_name=Salutation,edge_encryption_enabled=true" label="Salutation" max_length="40" name="u_salutation" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Salutation (U)" max_length="40" name="u_salutation__u_" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Status" max_length="40" name="u_status" type="string"/>
+        <element attributes="import_attribute_name=Visit - City,edge_encryption_enabled=true" label="Visit - City" max_length="40" name="u_visit___city" type="string"/>
+        <element attributes="import_attribute_name=XING_URL,edge_encryption_enabled=true" label="XING_URL" max_length="45" name="u_xing_url" type="string"/>
+    </element>
+</database>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Contact interessted in Topic" max_length="40" name="x_poag_account_pot_contact_interessted_in_topic" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Comment" max_length="100" name="comment" type="string"/>
+        <element label="Contact" max_length="32" name="contact" reference="x_poag_account_pot_contact" type="reference"/>
+        <element label="Relevance" max_length="9" name="relevance" type="integer"/>
+        <element choice="1" label="Responsibility" max_length="40" name="responsibility" type="choice">
+            <choice/>
+        </element>
+        <element label="Topic" max_length="32" name="topic" reference="x_poag_account_pot_topic" reference_floats="true" type="reference"/>
+        <index name="index">
+            <element name="contact"/>
+        </index>
+        <index name="index2">
+            <element name="topic"/>
+        </index>
+    </element>
+</database>

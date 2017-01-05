@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Contact has Role in Account" max_length="40" name="x_poag_account_pot_contact_has_role_in_account" type="collection">
+        <element label="Contact" max_length="32" name="contact" reference="x_poag_account_pot_contact" reference_floats="true" type="reference"/>
+        <element display="true" label="Role" max_length="32" name="role" reference="x_poag_account_pot_role" reference_floats="true" type="reference"/>
+        <index name="index">
+            <element name="role"/>
+        </index>
+        <index name="index2">
+            <element name="contact"/>
+        </index>
+    </element>
+</database>

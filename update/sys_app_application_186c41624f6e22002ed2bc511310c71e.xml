@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_app_application">
+    <sys_app_application action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category display_value="Custom Applications">e0355b31ef303000a61d5a3615c0fb78</category>
+        <description/>
+        <device_type>browser</device_type>
+        <hint/>
+        <name>Competitive Solution for Challenge</name>
+        <order>100</order>
+        <roles>x_poag_account_pot_competitive_solution_for_challenge_user</roles>
+        <sys_class_name>sys_app_application</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2016-10-21 16:27:01</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_id>186c41624f6e22002ed2bc511310c71e</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Account Potential Strukture</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
+        <sys_update_name>sys_app_application_186c41624f6e22002ed2bc511310c71e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2016-10-28 07:44:59</sys_updated_on>
+        <title>Account Potential Strukture</title>
+        <view_name/>
+    </sys_app_application>
+</record_update>

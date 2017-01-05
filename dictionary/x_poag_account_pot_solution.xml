@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Solution" max_length="40" name="x_poag_account_pot_solution" type="collection">
+        <element label="Category" max_length="32" name="category" reference="x_poag_account_pot_solution_category" type="reference"/>
+        <element label="Description" max_length="1000" name="description" type="string"/>
+        <element label="isOffering" max_length="40" name="isoffering" type="boolean"/>
+        <element choice="1" label="Kind" max_length="40" name="kind" type="choice">
+            <choice/>
+        </element>
+        <element label="Name" max_length="100" name="name" type="string"/>
+        <element choice="1" label="Type" max_length="40" name="type" type="choice">
+            <choice>
+                <element label="Item" sequence="0" value="Item"/>
+                <element label="Task" sequence="1" value="Task"/>
+                <element label="Resource" sequence="2" value="Resource"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="category"/>
+        </index>
+    </element>
+</database>

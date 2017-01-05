@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_documentation element="competitive_solution" label="Competitive Solution" language="en" table="x_poag_account_pot_competitive_solution_for_challenge">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>competitive_solution</element>
+            <help/>
+            <hint/>
+            <label>Competitive Solution</label>
+            <language>en</language>
+            <name>x_poag_account_pot_competitive_solution_for_challenge</name>
+            <plural>Competitive Solutions</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-10-21 16:27:02</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>906c41624f6e22002ed2bc511310c737</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Competitive Solution</sys_name>
+            <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
+            <sys_update_name>sys_documentation_x_poag_account_pot_competitive_solution_for_challenge_competitive_solution_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-10-21 16:27:02</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

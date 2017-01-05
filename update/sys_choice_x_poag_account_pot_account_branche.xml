@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="branche" table="x_poag_account_pot_account" version="3">
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>branche</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Finance</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account</name>
+            <sequence>0</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-11-08 15:11:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>35a7e1944fc3a20089fddf601310c771</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-11-08 15:11:15</sys_updated_on>
+            <value>Finance</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>branche</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Healthcare</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account</name>
+            <sequence>1</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-11-08 15:11:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>79a7e1944fc3a20089fddf601310c771</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-11-08 15:11:15</sys_updated_on>
+            <value>Healthcare</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>branche</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Insurance</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account</name>
+            <sequence>2</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-11-08 15:11:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>3da7e1944fc3a20089fddf601310c771</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-11-08 15:11:15</sys_updated_on>
+            <value>Insurance</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>branche</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Utility</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account</name>
+            <sequence>3</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-11-08 15:11:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>fda7e1944fc3a20089fddf601310c771</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-11-08 15:11:15</sys_updated_on>
+            <value>Utility</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>branche</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Telco</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account</name>
+            <sequence>4</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-11-08 15:11:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>b1a7e1944fc3a20089fddf601310c772</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-11-08 15:11:15</sys_updated_on>
+            <value>Telco</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>branche</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Pharma</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account</name>
+            <sequence>5</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-11-08 15:11:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>75a7e1944fc3a20089fddf601310c772</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-11-08 15:11:15</sys_updated_on>
+            <value>Pharma</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>branche</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Logistics</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account</name>
+            <sequence>6</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-11-08 15:11:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>39a7e1944fc3a20089fddf601310c772</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-11-08 15:11:15</sys_updated_on>
+            <value>Logistics</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>branche</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Government</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account</name>
+            <sequence>7</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-12-19 12:28:42</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>e8ab806d4f37a2002ed2bc511310c7a4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-12-19 12:28:42</sys_updated_on>
+            <value>Government</value>
+        </sys_choice>
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>branche</element>
+            <name>x_poag_account_pot_account</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-11-08 15:11:15</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>b5a7e1944fc3a20089fddf601310c771</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_name>branche</sys_name>
+            <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
+            <sys_update_name>sys_choice_x_poag_account_pot_account_branche</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-12-19 12:28:42</sys_updated_on>
+        </sys_choice_set>
+    </sys_choice>
+</record_update>

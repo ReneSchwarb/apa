@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Challenge of Topic" max_length="40" name="x_poag_account_pot_challenge_of_topic" type="collection">
+        <element label="Challenge" max_length="32" name="challenge" reference="x_poag_account_pot_challenge" reference_floats="true" type="reference"/>
+        <element display="true" label="Topic" max_length="32" name="topic" reference="x_poag_account_pot_topic" reference_floats="true" type="reference"/>
+        <index name="index">
+            <element name="challenge"/>
+        </index>
+        <index name="index2">
+            <element name="topic"/>
+        </index>
+    </element>
+</database>

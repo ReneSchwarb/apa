@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_ui_related sys_domain="global" table="x_poag_account_pot_situation" version="2" view="">
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <list_id display_value="Situation - Default view" name="x_poag_account_pot_situation" related_list="NULL" sys_domain="global" view="Default view">92ff807c4ffaa20089fddf601310c7da</list_id>
+            <order_by/>
+            <position>0</position>
+            <related_list>x_poag_account_pot_account_has_situation.situation</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-10-28 11:49:27</sys_created_on>
+            <sys_id>96ff807c4ffaa20089fddf601310c7da</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-10-28 11:49:27</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <list_id display_value="Situation - Default view" name="x_poag_account_pot_situation" related_list="NULL" sys_domain="global" view="Default view">92ff807c4ffaa20089fddf601310c7da</list_id>
+            <order_by/>
+            <position>1</position>
+            <related_list>x_poag_account_pot_situation_creates_challenge.situation</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-10-28 11:49:27</sys_created_on>
+            <sys_id>5aff807c4ffaa20089fddf601310c7da</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-10-28 11:49:27</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <list_id display_value="Situation - Default view" name="x_poag_account_pot_situation" related_list="NULL" sys_domain="global" view="Default view">92ff807c4ffaa20089fddf601310c7da</list_id>
+            <order_by/>
+            <position>2</position>
+            <related_list>x_poag_account_pot_situation_of_topic.situation</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-10-28 11:49:27</sys_created_on>
+            <sys_id>1eff807c4ffaa20089fddf601310c7da</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-10-28 11:49:27</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list action="INSERT_OR_UPDATE">
+            <calculated_name>Situation - Default view</calculated_name>
+            <filter/>
+            <name>x_poag_account_pot_situation</name>
+            <order_by/>
+            <position/>
+            <related_list/>
+            <sys_class_name>sys_ui_related_list</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2016-10-28 11:49:27</sys_created_on>
+            <sys_customer_update>true</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_id>92ff807c4ffaa20089fddf601310c7da</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Situation - Default view</sys_name>
+            <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
+            <sys_update_name>sys_ui_related_x_poag_account_pot_situation_null</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2016-10-28 11:49:27</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_related_list>
+    </sys_ui_related>
+</record_update>

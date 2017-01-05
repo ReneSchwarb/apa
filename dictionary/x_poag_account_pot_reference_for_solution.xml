@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Reference for Solution" max_length="40" name="x_poag_account_pot_reference_for_solution" type="collection">
+        <element label="Reference Story" max_length="32" name="reference_story" reference="x_poag_account_pot_reference_story" type="reference"/>
+        <element label="Solution" max_length="32" name="solution" reference="x_poag_account_pot_solution" reference_floats="true" type="reference"/>
+        <index name="index">
+            <element name="solution"/>
+        </index>
+        <index name="index2">
+            <element name="reference_story"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Account" max_length="40" name="x_poag_account_pot_account" type="collection">
+        <element label="Active" max_length="40" name="active" type="boolean"/>
+        <element choice="1" label="Branche" max_length="40" name="branche" type="choice">
+            <choice>
+                <element label="Finance" sequence="0" value="Finance"/>
+                <element label="Healthcare" sequence="1" value="Healthcare"/>
+                <element label="Insurance" sequence="2" value="Insurance"/>
+                <element label="Utility" sequence="3" value="Utility"/>
+                <element label="Telco" sequence="4" value="Telco"/>
+                <element label="Pharma" sequence="5" value="Pharma"/>
+                <element label="Logistics" sequence="6" value="Logistics"/>
+                <element label="Government" sequence="7" value="Government"/>
+            </choice>
+        </element>
+        <element label="description" max_length="200" name="description" type="string"/>
+        <element display="true" label="Name" max_length="100" name="name" type="string"/>
+    </element>
+</database>

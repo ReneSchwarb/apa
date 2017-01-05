@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sp_angular_provider">
+    <sp_angular_provider action="INSERT_OR_UPDATE">
+        <name>itemEditor</name>
+        <script><![CDATA[function(){
+	return {
+		link: function($scope){
+			$scope.displayMessage = function(filter, sys_id, relname) {
+				alert('Hello filter:'+filter+' sys_id:'+sys_id+' relname:'+relname);
+				$scope.log(filter, sys_id, relname);
+			};
+		},
+		restrict: 'E', // use 'A' for attribute or 'E' for element 
+		replace: 'true',
+		// das template ist im HTML Template integriert mit dem script type template
+		templateUrl: function($elem, $attr){
+      return $attr.art
+		},
+
+		scope: {
+			items: "=",   // liste der Objekte items oder relItems
+			showwhen: "=",
+			filteron: "=",    // filteron true = filter beachten, false heisst ignorieren
+			openclose:  "=",  // soll der Pfeil um die Childs zu öffen angezeigt werden? 
+			accountid: "=",    // die id des selektierten accounts
+			account: "=",      // json Objekt mit den daten zum Account
+			relname: '@relname',  // @ Parameter seien immer vom Typ String
+			toidname: "@",        // bei art=relitem das asId Feld
+			chg:'&',
+			saveobj:'&',
+			log: '&',
+			reltype: "@",  // relType: check, hit, relevance
+			debug: "=",
+			namefield: "@",
+			decscriptionfield: "@",
+			comment: "="
+		}
+
+	};
+}
+
+]]></script>
+        <sys_class_name>sp_angular_provider</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2016-12-10 15:57:48</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>f3546a624feb26002ed2bc511310c702</sys_id>
+        <sys_mod_count>115</sys_mod_count>
+        <sys_name>itemEditor</sys_name>
+        <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
+        <sys_update_name>sp_angular_provider_f3546a624feb26002ed2bc511310c702</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2016-12-18 11:24:52</sys_updated_on>
+        <type>directive</type>
+    </sp_angular_provider>
+</record_update>

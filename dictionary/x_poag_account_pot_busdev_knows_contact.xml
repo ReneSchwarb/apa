@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="BusDev Knows Contact" max_length="40" name="x_poag_account_pot_busdev_knows_contact" type="collection">
+        <element label="Busdev" max_length="32" name="busdev" reference="x_poag_account_pot_contact" type="reference"/>
+        <element display="true" label="Contact" max_length="32" name="contact" reference="x_poag_account_pot_contact" reference_floats="true" type="reference"/>
+        <element label="du" max_length="40" name="du" type="boolean"/>
+        <element label="Relevance" max_length="1" name="relevance" type="integer"/>
+        <element label="Trust Level" max_length="1" name="trust_level" type="integer"/>
+        <index name="index">
+            <element name="busdev"/>
+        </index>
+        <index name="index2">
+            <element name="contact"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Competitive Solution for Challenge" max_length="40" name="x_poag_account_pot_competitive_solution_for_challenge" type="collection">
+        <element label="Challenge" max_length="32" name="challenge" reference="x_poag_account_pot_challenge" reference_floats="true" type="reference"/>
+        <element label="Comment" max_length="300" name="comment" type="string"/>
+        <element display="true" label="Competitive Solution" max_length="32" name="competitive_solution" reference="x_poag_account_pot_competitive_solution" reference_floats="true" type="reference"/>
+        <index name="index">
+            <element name="challenge"/>
+        </index>
+        <index name="index2">
+            <element name="competitive_solution"/>
+        </index>
+    </element>
+</database>

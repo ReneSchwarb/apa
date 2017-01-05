@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Role interested in Topic" max_length="40" name="x_poag_account_pot_role_interested_in_topic" type="collection">
+        <element label="Desciption" max_length="200" name="desciption" type="string"/>
+        <element label="Relevance" max_length="1" name="relevance" type="integer"/>
+        <element label="Role" max_length="32" name="role" reference="x_poag_account_pot_role" type="reference"/>
+        <element label="Topic" max_length="32" name="topic" reference="x_poag_account_pot_topic" type="reference"/>
+        <index name="index">
+            <element name="role"/>
+        </index>
+        <index name="index2">
+            <element name="topic"/>
+        </index>
+    </element>
+</database>

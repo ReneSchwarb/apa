@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Competitive Solution" max_length="40" name="x_poag_account_pot_competitive_solution" type="collection">
+        <element label="Description" max_length="40" name="description" type="string"/>
+        <element display="true" label="Name" max_length="40" name="name" type="string"/>
+        <element label="Product URL" max_length="1024" name="product_url" type="url"/>
+    </element>
+</database>
