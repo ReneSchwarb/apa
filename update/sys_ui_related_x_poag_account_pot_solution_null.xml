@@ -3,59 +3,73 @@
     <sys_ui_related sys_domain="global" table="x_poag_account_pot_solution" version="2" view="">
         <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
             <filter/>
-            <list_id display_value="Solution - Default view" name="x_poag_account_pot_solution" related_list="NULL" sys_domain="global" view="Default view">d12a24d24f08b6002ed2bc511310c7a2</list_id>
+            <list_id display_value="Solution - Default view" name="x_poag_account_pot_solution" related_list="NULL" sys_domain="global" view="Default view">a8cab8434fc0f6002ed2bc511310c766</list_id>
             <order_by/>
             <position>0</position>
             <related_list>x_poag_account_pot_reference_for_solution.solution</related_list>
             <sys_class_name>sys_ui_related_list_entry</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-01-03 08:53:10</sys_created_on>
-            <sys_id>e52a24d24f08b6002ed2bc511310c7a2</sys_id>
+            <sys_created_on>2017-01-05 18:01:11</sys_created_on>
+            <sys_id>accab8434fc0f6002ed2bc511310c766</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-01-03 08:53:10</sys_updated_on>
+            <sys_updated_on>2017-01-05 18:01:11</sys_updated_on>
         </sys_ui_related_list_entry>
         <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
             <filter/>
-            <list_id display_value="Solution - Default view" name="x_poag_account_pot_solution" related_list="NULL" sys_domain="global" view="Default view">d12a24d24f08b6002ed2bc511310c7a2</list_id>
+            <list_id display_value="Solution - Default view" name="x_poag_account_pot_solution" related_list="NULL" sys_domain="global" view="Default view">a8cab8434fc0f6002ed2bc511310c766</list_id>
             <order_by/>
             <position>1</position>
             <related_list>x_poag_account_pot_solution_of_challenge.solution</related_list>
             <sys_class_name>sys_ui_related_list_entry</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-01-03 08:53:10</sys_created_on>
-            <sys_id>a92a24d24f08b6002ed2bc511310c7a2</sys_id>
+            <sys_created_on>2017-01-05 18:01:11</sys_created_on>
+            <sys_id>60cab8434fc0f6002ed2bc511310c767</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-01-03 08:53:10</sys_updated_on>
+            <sys_updated_on>2017-01-05 18:01:11</sys_updated_on>
         </sys_ui_related_list_entry>
         <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
             <filter/>
-            <list_id display_value="Solution - Default view" name="x_poag_account_pot_solution" related_list="NULL" sys_domain="global" view="Default view">d12a24d24f08b6002ed2bc511310c7a2</list_id>
+            <list_id display_value="Solution - Default view" name="x_poag_account_pot_solution" related_list="NULL" sys_domain="global" view="Default view">a8cab8434fc0f6002ed2bc511310c766</list_id>
             <order_by/>
             <position>2</position>
             <related_list>x_poag_account_pot_solution_need_skills.solution</related_list>
             <sys_class_name>sys_ui_related_list_entry</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-01-03 08:53:10</sys_created_on>
-            <sys_id>6d2a24d24f08b6002ed2bc511310c7a2</sys_id>
+            <sys_created_on>2017-01-05 18:01:11</sys_created_on>
+            <sys_id>24cab8434fc0f6002ed2bc511310c767</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-01-03 08:53:10</sys_updated_on>
+            <sys_updated_on>2017-01-05 18:01:11</sys_updated_on>
         </sys_ui_related_list_entry>
         <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
             <filter/>
-            <list_id display_value="Solution - Default view" name="x_poag_account_pot_solution" related_list="NULL" sys_domain="global" view="Default view">d12a24d24f08b6002ed2bc511310c7a2</list_id>
+            <list_id display_value="Solution - Default view" name="x_poag_account_pot_solution" related_list="NULL" sys_domain="global" view="Default view">a8cab8434fc0f6002ed2bc511310c766</list_id>
             <order_by/>
             <position>3</position>
             <related_list>x_poag_account_pot_account_and_solution.solution</related_list>
             <sys_class_name>sys_ui_related_list_entry</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-01-03 08:53:10</sys_created_on>
-            <sys_id>212a24d24f08b6002ed2bc511310c7a3</sys_id>
+            <sys_created_on>2017-01-05 18:01:11</sys_created_on>
+            <sys_id>e4cab8434fc0f6002ed2bc511310c767</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-01-03 08:53:10</sys_updated_on>
+            <sys_updated_on>2017-01-05 18:01:11</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <list_id display_value="Solution - Default view" name="x_poag_account_pot_solution" related_list="NULL" sys_domain="global" view="Default view">a8cab8434fc0f6002ed2bc511310c766</list_id>
+            <order_by/>
+            <position>4</position>
+            <related_list>x_poag_account_pot_solution_of_topic.solution</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-01-05 18:01:11</sys_created_on>
+            <sys_id>a8cab8434fc0f6002ed2bc511310c767</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-01-05 18:01:11</sys_updated_on>
         </sys_ui_related_list_entry>
         <sys_ui_related_list action="INSERT_OR_UPDATE">
             <calculated_name>Solution - Default view</calculated_name>
@@ -66,10 +80,10 @@
             <related_list/>
             <sys_class_name>sys_ui_related_list</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-01-03 08:53:10</sys_created_on>
+            <sys_created_on>2017-01-05 18:01:11</sys_created_on>
             <sys_customer_update>true</sys_customer_update>
             <sys_domain>global</sys_domain>
-            <sys_id>d12a24d24f08b6002ed2bc511310c7a2</sys_id>
+            <sys_id>a8cab8434fc0f6002ed2bc511310c766</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>Solution - Default view</sys_name>
             <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
@@ -78,7 +92,7 @@
             <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
             <sys_update_name>sys_ui_related_x_poag_account_pot_solution_null</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-01-03 08:53:10</sys_updated_on>
+            <sys_updated_on>2017-01-05 18:01:11</sys_updated_on>
             <sys_user/>
             <view display_value="Default view" name="NULL">Default view</view>
             <view_name/>

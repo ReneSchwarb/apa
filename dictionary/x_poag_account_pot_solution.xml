@@ -5,14 +5,18 @@
         <element label="Description" max_length="1000" name="description" type="string"/>
         <element label="isOffering" max_length="40" name="isoffering" type="boolean"/>
         <element choice="1" label="Kind" max_length="40" name="kind" type="choice">
-            <choice/>
+            <choice>
+                <element label="ipt Offering" sequence="0" value="ipt Offering"/>
+                <element label="Partner Offering" sequence="1" value="Partner Offering"/>
+                <element label="Competition" sequence="2" value="Competition"/>
+            </choice>
         </element>
         <element label="Name" max_length="100" name="name" type="string"/>
         <element choice="1" label="Type" max_length="40" name="type" type="choice">
             <choice>
-                <element label="Item" sequence="0" value="Item"/>
-                <element label="Task" sequence="1" value="Task"/>
-                <element label="Resource" sequence="2" value="Resource"/>
+                <element label="Product" sequence="0" value="Product"/>
+                <element label="Service" sequence="1" value="Service"/>
+                <element hint="EIn Person mit entsprechenden Skills" label="Resource" sequence="2" value="Resource"/>
             </choice>
         </element>
         <index name="index">

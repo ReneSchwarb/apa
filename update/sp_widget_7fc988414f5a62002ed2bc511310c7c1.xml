@@ -1329,6 +1329,20 @@ debug=false;
 		if (debug) console.log("**********ChallengeHasRoles n*****************"+objectInspector(data.q.roles, res));
 		debug = false;
 
+				// -----------------------
+		console.log("Solution of in Topic");
+		// -----------------------
+		// relType relevance verlangt immer eine numFunction, weil sonst die Zahl als Text geliefert wird
+		data.m.solOfTop = {};
+		data.m.solOfTop.table = {'relType':{'type':'check'}, 'rel':'solOfTop', 'root':'q', 'name':'x_poag_account_pot_solution_of_topic',  'atts':'sys_id'};
+		data.m.solOfTop.from =  {'asId':'soid','refField':'solution', 'field':'name', 'asField': 'solution',  'list':'solutions'};
+		data.m.solOfTop.to =    {'asId':'toid','refField':'topic',      'field':'name', 'asField': 'topic'    };
+		data.m.solOfTop.values = {'comment':       {  'field':'comment', 'asField': 'comment'}};
+		getRelationOfObj(data, data.m.solOfTop);
+		if (debug) console.log("**********ChallengeHasRoles n*****************"+objectInspector(data.q.solutions, res));
+		debug = false;
+
+		
 	}
 	
 	function getObjs(table, atts, filter) {
@@ -1814,7 +1828,7 @@ function getAccounts(keywords) {
         <sys_created_on>2016-10-04 09:30:26</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>7fc988414f5a62002ed2bc511310c7c1</sys_id>
-        <sys_mod_count>1865</sys_mod_count>
+        <sys_mod_count>1867</sys_mod_count>
         <sys_name>Account Potential Analyse</sys_name>
         <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
         <sys_policy/>
@@ -1822,7 +1836,7 @@ function getAccounts(keywords) {
         <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
         <sys_update_name>sp_widget_7fc988414f5a62002ed2bc511310c7c1</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-01-05 09:46:43</sys_updated_on>
+        <sys_updated_on>2017-01-05 19:04:16</sys_updated_on>
         <template><![CDATA[
 <script type='text/ng-template' id="item">
  <div>
