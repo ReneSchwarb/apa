@@ -12,7 +12,9 @@
         <element attributes="import_attribute_name=Division,edge_encryption_enabled=true" label="Division" max_length="40" name="u_division" type="string"/>
         <element attributes="import_attribute_name=Email,edge_encryption_enabled=true" label="Email" max_length="40" name="u_email" type="string"/>
         <element attributes="import_attribute_name=Email Opt Out,edge_encryption_enabled=true" label="Email Opt Out" max_length="40" name="u_email_opt_out" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="E-Mail g_ltig" max_length="40" name="u_e_mail_g_ltig" type="string"/>
         <element attributes="import_attribute_name=First Name,edge_encryption_enabled=true" label="First Name" max_length="40" name="u_first_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Formal Salutation*" max_length="40" name="u_formal_salutation_" type="string"/>
         <element attributes="import_attribute_name=Function / Title,edge_encryption_enabled=true" label="Function / Title" max_length="44" name="u_function___title" type="string"/>
         <element attributes="import_attribute_name=ipt Netzwerk,edge_encryption_enabled=true" label="ipt Netzwerk" max_length="56" name="u_ipt_netzwerk" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="ipt Netzwerk (Q)" max_length="40" name="u_ipt_netzwerk__q_" type="string"/>

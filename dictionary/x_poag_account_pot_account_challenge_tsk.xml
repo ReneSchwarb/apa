@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database>
-    <element extends="x_poag_account_pot_apa_task" label="Account Challenge Task" max_length="40" name="x_poag_account_pot_account_challenge_tsk" sizeclass="1" type="collection">
+    <element extends="x_poag_account_pot_apa_task" label="Account Challenge Task" max_length="40" name="x_poag_account_pot_account_challenge_tsk" sizeclass="2" type="collection">
         <element label="Challenge of Account" max_length="32" name="challenge_of_account" reference="x_poag_account_pot_accounthaschallenge" reference_floats="true" type="reference"/>
         <element label="Checked" max_length="40" name="checked" type="boolean"/>
     </element>

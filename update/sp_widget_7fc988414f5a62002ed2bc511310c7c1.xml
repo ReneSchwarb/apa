@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
-        <client_script><![CDATA[function(spUtil, $scope, snRecordWatcher, $uibModal) {
+        <client_script><![CDATA[function(spUtil, $scope, snRecordWatcher, $uibModal, $sce) {
   /* widget controller */
 	// $uiModal wird für den Dialog benötigt https://angular-ui.github.io/bootstrap/#/modal
 	
@@ -219,13 +219,15 @@
 			c.filterIn(c.data.f.filterIn[name], 'sys_id', item.sys_id, false);
 		}
 	}
+	
 	// zb name=topic
 	// wird aufgerufen um ein filter zu aktivieren zB topic (name) Filter anwenden
 	// alle items welche angezeigt werden sollen werden markiert
 	// betriff nur geladene Daten, also Daten die auf dem Client sind
 	// TODO wenn ich den account Filter abschalte, sollte alle Accounts oder die einer Branche geladen werden
-	// ohne gliech all Kontakte zu laden
+	// ohne gleich all Kontakte zu laden
 	// wenn ich aber accHasSol in den grid nehmen, müssen alle accHasSol Daten geladen werden (oder eben nur die gerade im grid angezeigt werden )
+	// TODO ich will nicht immer alles filtern, was filterbar ist. zB account nach topic, aber topic nicht
 	c.setFilter = function(name) {
 		//var inp = {};
 		//TODO Filter auch für die eigentlichen Daten in c.data umsetzen
@@ -233,7 +235,7 @@
 
 		//TODO flag generisch machen, für jeden definierten Filter
 		c.data.filterOn = c.data.filterTopicOn || c.data.filterBrancheOn || c.data.filterRoleOn;
-		c.setStatus();
+		c.setStatus();  // nur für Anzeige
 		// braucht es nicht mehr, wird im Serverscript initiaisiert
 		if (typeof c.data.filter == 'undefined') { 
 			c.data.filter = {};
@@ -251,9 +253,11 @@
 			}
 		}
 		// über alle q listen gehen und in den Metadaten jeder q liste schauen, ob der name als Filter existiert
+		// die datalist zeigt welche Objeke mit diesem Filter zB topic gefiltert werden können
 		for (var key in c.data.f.meta[name].datalist) {   // zb Situation
 			var itemName = c.data.f.meta[name].datalist[key];
 			console.log("filtern von:"+itemName);
+			//TODO mit q gehet nur q daten, aber nicht d daten wie accounts
 			for (var item in c.data.q[itemName+"s"]) {     // zb eine Situation
 				console.log("C255 item:"+jsonPrint(item, res));
 				if (c.show(itemName+"s", item)) {
@@ -322,7 +326,31 @@
 
 	var res = "";
 	console.log("C261 c.data.account:"+objectInspector(c.data.account, res));
+	
+	// funktioniert nicht
+  c.crossOrigin = function() {
+		var myUrl = "https://pointsoft.service-now.com";
+		console.log("C326 crossOrigin called");
+	  var url = 'https://www.xing.com/profile/Adrian_Baumann4';
+		console.log("C328 getJSON:"+myUrl+'/get?url=' + encodeURIComponent(url) + '&callback=?')
+        $.getJSON(url, function(d){
+            var html = ""+d.contents;
+					console.log("C330 html:"+jsonPrint(html));
 
+            /* Replace relative links to absolute ones */
+            html = html.replace(new RegExp('(href|src)="/', 'g'),  '$1="'+url+'/');
+
+            $("#siteLoader").html(html);
+        });
+	}
+	// funktioniert nicht
+	c.itemDetail = function(item){
+		  if (typeof item.xing_url != 'undefined') {
+				c.detailFrame = $sce.trustAsResourceUrl(item.xing_url);
+			} else if (typeof item.linkedin_url != 'undefined') {
+				c.detailFrame = trustAsResourceUrl(item.linkedin_url);
+			}
+  };
   // ----------------------------------------------------------------------------------//	
 	// Grid: mit dem Grid können Beziehungen in Tabellen definiert werden
 	// getRows holt eine bestimmte Anzahl Zeilen und gibt sie als Array zurück
@@ -379,6 +407,11 @@
 	}	
 	c.mathMin = function(v1,v2) {
 		return Math.min(v1,v2);
+	}
+	
+	c.getTooltip = function(item) {
+		console.log("C382 tooltip:"+jsonPrint(item));
+		return jsonPrint(item);
 	}
 	c.nextGrid = function() {
 		c.data.grid.list = c.getRows(c.data.grid.rows, c.data.grid.window_start, c.data.grid.window_end);
@@ -456,12 +489,14 @@
 		var meta = data.m[relName];
 		for (var i in data.grid.list) {
 			var row = data.grid.list[i];
+			row.tooltip = c.getTooltip(row)+"ZZ";
 			console.log("C453:"+row.sys_id)
 			for (var j in data.grid.cols) {
 				//console.log("C455: col sys_id "+meta.to.asId+":"+j) 
 				var relItem = c.getRelItem(data, meta, relName, data.grid.fromList, row.sys_id, data.grid.toList , data.grid.cols[j].sys_id)
 				if (relItem) {
 					if (typeof data.grid[row.sys_id] == 'undefined') data.grid[row.sys_id] = {};
+					
 					data.grid[row.sys_id][data.grid.cols[j].sys_id] = relItem;
 					//TODO kann ich checked immer auf true setzen?
 					// a) wenn es keine value dafür gibt, dann ist checked true, wenn eine Beziehung existiert
@@ -611,9 +646,9 @@
 	// values welche im RefField zum neuen Objekt (to.field) haben, können dort gesetzt werden.
 	// kann auch update auf bestehenden Objekten machen
 	c.saveNewObj = function(relItem, relName) {
+		console.log("C646 relName:"+relName+" relItem:"+jsonPrint(relItem));
 		var meta = c.data.m[relName];
 		meta.insertObj = false;
-		console.log("C610 relName:"+relName+" relItem:"+jsonPrint(relItem));
 
 		// das inp Objekt wird als parameter an der Serverscript geschickt, dort
 		var inp = {};
@@ -800,10 +835,10 @@ function jsonPrint(object, result) {
   //margin-left: 100px;
 }
   
-//th:first-child {
-//    position: fixed;
-//    left: 5px
-//}
+div {
+  display: inline;
+  color: red;
+}
 </css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -1117,6 +1152,31 @@ function jsonPrint(object, result) {
 		if (debug) console.log("data.account:"+jsonPrint(data.account, res));
 		debug = false;
 
+				// -----------------------
+		console.log("AccountSolutionHasTask ");
+		// -----------------------
+		// mit root kann ein relItem im json data Objekt an einen bestimmten Ort gehängt werden.
+		// Achtung wenn root gesetzt ist, hast List ev nicht den Namen des Objektes sondern der Beziehung
+		// zb accHasContact:  'root':'account',
+		// account(account id). accHasCha(challenge id) . task (task id)
+		// ich habe 2 from lists in Serie mit list:account.accHasCha kann ich das ausdrücken, wenn es ein Feld accHasCha gibt, kann ich dort die zweite fromId holen?
+		// die id des accounts hole ich aus dem value feld accounts (dh es muss es geben)
+		data.m.accHasSta = {};
+		data.m.accHasSta.table =  {'rel':'accHasSta','root':root , 'name':'x_poag_account_pot_account_solution_task', 'atts':'sys_id', 'filter':'stask'};
+		data.m.accHasSta.from =   {'refField':'challenge_of_account.challenge', 'field':'name',  'asField': 'challenge',   'asId':'caid' ,'list':'accounts.accHasCha'};
+		data.m.accHasSta.to =     {                                  'field':'short_description',    'asField': 'task',        'asId':'taid' };
+		data.m.accHasSta.values = {'checked':    {'field':'checked',     'asField': 'checked',   'getFunc':'boolFunction',  'setFunc':'boolFunction'},
+														 'accounts':    {'refField':'solution_of_account.account', 'field':'name',  'asField': 'account', 'asId':'aid'},
+														 'challengeOfAccount': {'refField':'solution_of_account', 'field':'solution',  'asField': 'solutionOfAccount',   'asId':'asid'},
+														 'description':{'field':'description', 'asField': 'description'}
+														};
+		debug = false;
+		getRelationOfObj(data, data.m.accHasSta);
+		debug = false;
+		if (debug) console.log("data.account:"+jsonPrint(data.account, res));
+		debug = false;
+
+		
 		// -----------------------
 		console.log("Account.ContactHasRoles");
 		// was mach der grid mit zweistufigen refFields?
@@ -1179,6 +1239,8 @@ debug=false;
 		}
 		data.m.account = {};
 		data.m.account.table = {'name':'x_poag_account_pot_account', 'root':'d', 'atts':'name, sys_id, description'};
+		data.m.contact = {};
+		data.m.contact.table = {'name':'x_poag_account_pot_contact', 'root':'d', 'atts':'name, sys_id, description, network, account.name, function, xing_url, linkedin_url'};
 		data.m.situation = {};
 		data.m.situation.table = {'name':'x_poag_account_pot_situation', 'root':'q', 'atts':'name, sys_id, description'};
 		data.q = {};
@@ -1828,7 +1890,7 @@ function getAccounts(keywords) {
         <sys_created_on>2016-10-04 09:30:26</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>7fc988414f5a62002ed2bc511310c7c1</sys_id>
-        <sys_mod_count>1867</sys_mod_count>
+        <sys_mod_count>2026</sys_mod_count>
         <sys_name>Account Potential Analyse</sys_name>
         <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
         <sys_policy/>
@@ -1836,12 +1898,61 @@ function getAccounts(keywords) {
         <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
         <sys_update_name>sp_widget_7fc988414f5a62002ed2bc511310c7c1</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-01-05 19:04:16</sys_updated_on>
-        <template><![CDATA[
-<script type='text/ng-template' id="item">
+        <sys_updated_on>2017-02-06 17:30:11</sys_updated_on>
+        <template><![CDATA[	<script type='text/ng-template' id="item">
+  <div class="row">
+     <!-- filteron:{{filteron}}, relname:{{relname}}, item.included:{{item.included}}, item.name:{{item.name}}, item.contact:{{item.contact}}, {{item[toidname]}}, {{accountid}}, {{account[relname][item.sys_id].hit}} -->
+     <div class="col-sm-{{col1}} col-md-{{col1}} col-lg-{{col1}}" ng-if="item.included || !filteron">
+        <span ng-if="openclose">
+              <button ng-if="item.show"   class="fa fa-caret-square-o-down"  ng-click="item.show=!item.show" ></button>
+              <button ng-if="!item.show"  class="fa fa-caret-square-o-right" ng-click="item.show=!item.show" ></button>
+        </span>
+        <span ng-if="reltype=='hit'">
+                 <label class="rate-hit"><input type="radio" value="hit" ng-model="fromobj[relname][item[toidname]].hit"
+                      ng-change="chg({fromId:fromid, toId:item[toidname], relName:relname})" />Yes</label>
+                  <label class="rate-miss"><input type="radio" value="miss" ng-model="fromobj[relname][item[toidname]].hit"
+                       ng-change="chg({fromId:fromid, toId:item[toidname], relName:relname})"/>No</label>
+        </span>
+        <span ng-if="reltype=='state'"> 
+        	<span ng-repeat="st in states">
+                 <label class="rate-hit"><input type="radio" value="{{st}}" ng-model="fromobj[relname][item[toidname]].state"
+                      ng-change="chg({fromId:fromid, toId:item[toidname], relName:relname})" />{{st}}</label>
+        	</span>
+        </span>
+        <span ng-if="reltype=='select'">
+           Name:                  
+          <select ng-model="account[relname][item[toidname]][selectid]" 
+               		ng-change="chg(fromid, item[toidname], relname)">
+                  <option ng-repeat="option in fromobj[selectrel]" value="{{option.sys_id}}">{{option.name}}</option>
+			    </select>
+        </span>
+        <span ng-if="reltype=='checked'" class="checkbox">
+           <label for="{{item[toidname]}}">
+           <input type="checkbox" ng-model="fromobj[relname][item[toidname]].checked" name="group" id="{{item[toidname]}}" 
+                           ng-change="saveobj(relItem:item, {{relname}})" />{{item[descriptionfield]}} </label>
+
+        </span>
+        <span ng-if="namefield == null"></span>
+        <span ng-if="namefield != null">{{item[namefield]}}</span>
+    </div>
+    <div class="col-sm-{{col2}} col-md-{{col2}} col-lg-{{col2}}" ng-if="item.included || !filteron">
+       <span ng-if="descriptionfield == null"></span>
+       <span ng-if="descriptionfield != null">{{item[descriptionfield]}}</span>
+       <span ng-if="comment">
+         <input class="form-control"  placeholder="comment" ng-model="account[relname][item[toidname]].comment"
+                  ng-change="fromobj[relname][item[toidname]].changed=true" />
+         <button class="fa fa-check" ng-click="saveobj({relItem:fromobj[relname][item[toidname]], relName:relname}); fromobj[relname][item[toidname]].changed=false;"
+                  ng-if="fromobj[relname][item[toidname]].changed"></button>
+       </span>
+    </div>
+	</div> 
+  </script>
+
+
+<script type='text/ng-template' id="itemlist">
  <div>
    <div> <!-- ng-repeat="item in items" -->  <!--- kein RelItem  --->
-      filteron:{{filteron}}, relname:{{relname}}, item.included:{{item.included}}, item.name:{{item.name}}, item.contact:{{item.contact}}, {{item.sys_id}}, {{accountid}}, {{account[relname][item.sys_id].hit}} -->
+      filteron:{{filteron}}, relname:{{relname}}, item.included:{{item.included}}, item.name:{{item.name}}, item.contact:{{item.contact}}, {{item.sys_id}}, {{accountid}}, {{account[relname][item.sys_id].hit}} 
       <table class="table table-striped table-responsive" > 
          <tr ng-repeat="item in items"> <!-- ng-if="item.included || !filteron" -->
            <td ng-if="item.included || !filteron"> 
@@ -1873,12 +1984,13 @@ function getAccounts(keywords) {
     <!-- <div ng-click="displayMessage(filteron, accountid, relname)" class="btn btn-primary">This is a Directive</div> -->
     </div>
   </script>
-	<script type='text/ng-template' id="relitem">
+
+	<script type='text/ng-template' id="relitem1">
       <tr>
       <td>
       </td>
     	<td ng-if="showwhen">
-        <! *---* Challenges -->
+        <!-- *---* Challenges -->
         <table class="table table-striped table-responsive" >
           <tr ng-repeat="item in items" >
             <td> 
@@ -1900,12 +2012,31 @@ function getAccounts(keywords) {
       </tr>  
   </script>
 
+	<script type='text/ng-template' id="relitem">
+  <div>
+  <! --Parameter: item, account, relname, toidname, reltype, descriptionfield
+        <!---* Challenges -->
+              <!-- {{relname}}, {{toidname}}, {{item[toidname]}}, {{accountid}}, {{account[relname][item[toidname]].hit}} -->
+              {{item.name}} <br>
+              <label class="rate-hit"><input type="radio"   value="hit" ng-model="account[relname][item[toidname]].hit" 
+                     ng-change="chg({fromId:accountid, toId:item[toidname], relName:relname})" />Yes</label>
+              <label class="rate-miss"><input type="radio" value="miss" ng-model="account[relname][item[toidname]].hit" 
+                     ng-change="chg({fromId:accountid, toId:item[toidname], relName:relname})"/>No</label>
+
+          <div ng-if="descriptionfield == null">{{item.description}}</div> 
+          <div ng-if="descriptionfield != null">{{item[descriptionfield]}}</div> 
+              {{item.reason}} 
+  </div>
+  </script>
+
+
+
 <script type='text/ng-template' id="dialog.html">
 <div>
 	<div class="modal-header">
     <div class="modal-body" >
     {{name}} {{meta.table.rel}}
-      <! *--- neuen Contact erfassen -------->
+      <!--- neuen Contact erfassen -------->
       <div white-space: nowrap;  ng-repeat="att in meta.values">
        	<span><label>{{att.asField}}<input class="form-control"  placeholder="{{att.asField}}" ng-model="relItem[att.asField]"/></label></span>
       </div>    
@@ -1933,6 +2064,7 @@ function getAccounts(keywords) {
               <label><input type="checkbox" ng-model="c.data.f._fields.public.value">test</label>
             </div>
           </li>
+          <li><div class="checkbox m-l"><label><input type="checkbox" ng-model="c.data.show.accounts"/>${Accounts}</label></div></li>
           <li><div class="checkbox m-l"><label><input type="checkbox" ng-model="c.data.show.stakeholder"/>${Stakeholder}</label></div></li>
           <li><div class="checkbox m-l"><label><input type="checkbox" ng-model="c.data.show.situations"/>${Situations}</label></div></li>
           <li><div class="checkbox m-l"><label><input type="checkbox" ng-model="c.data.show.challenges"/>${Challenges}</label></div></li>
@@ -1940,6 +2072,8 @@ function getAccounts(keywords) {
           <li><div class="checkbox m-l"><label><input type="checkbox" ng-model="c.data.show.analyse"/>${Analyse}</label></div></li>
 
           <li ><a href="javascript:void(0)" ng-click="c.reloadData(c.data.m['accAndTop'])">${Reload Accounts}</a></li>
+          <li ><a href="javascript:void(0)" ng-click="c.reloadData(c.data.m['conIntTop'])">${Reload Contacts}</a></li>
+          <li ><a href="javascript:void(0)" ng-click="c.crossOrigin()">${open xing}</a></li>
           <li ><a href="javascript:void(0)" ng-click="c.data.editfilter=true; c.status=editfilter;">${Filter Topics}</a></li>
           <li >
             <a href="javascript:void(0)" ng-click="c.editOptionSchema($event)">${Map Meta Data}</a>
@@ -1960,7 +2094,7 @@ function getAccounts(keywords) {
         </div>
 
       </div> 
-      <! ----* das Menu  --->
+      <!--  das Menu  --->
       <label class="group">${Filter}</label>
     	<span class="check">
       <label>
@@ -1978,8 +2112,8 @@ function getAccounts(keywords) {
 
   </div>
 
-  <! -- topics für Filter wählen --->
-  <! --* Account wählen ---->
+  <!-- topics für Filter wählen --->
+  <!--* Account wählen -->
   <div class="rp m-t-xs">
     <sn-record-picker class="rp" placeholder="Select an Account"
                       field="c.get_account" table="'x_poag_account_pot_account'"
@@ -1988,10 +2122,10 @@ function getAccounts(keywords) {
                       page-size="100" options="c.pickerOptions"></sn-record-picker>
   </div>
   
-  <! ---* Mappings definieren  --->
+  <!---* Mappings definieren  --->
   <button ng-if="c.data.mapOn" class="fa fa-filter" ng-click="c.data.mapOn=!c.data.mapOn" ></button>
   <button ng-if="!c.data.mapOn"  class="fa fa-cog" ng-click="c.data.mapOn=!c.data.mapOn; c.getGrid()" ></button>
-  <! --* Relation wählen ---->
+  <!--* Relation wählen --->
   <div class="rp m-t-xs">
     <sn-record-picker class="rp" placeholder="Select an Releation"
                       field="c.get_relation" table="'x_poag_account_pot_relations'"
@@ -2001,14 +2135,14 @@ function getAccounts(keywords) {
   </div>
 
 
-  <! *---* grid ------------------------------------------------------------>
-  <! Branchenfilter einbauen -->
+  <!---* grid  -->
+  <!-- Branchenfilter einbauen -->
   <section class="" ng-if="c.data.mapOn">
     <label>Number of rows:<input class="form-control" ng-model="c.data.grid.size" ng-change="c.getGrid()" /></label>
 
     <div class="outer">
   <div class="inner">
-    <table class="table table-striped table-responsive mytable" >
+    <table class="table table-striped table-responsive table-condensed mytable" >
       <thead>
         <tr>
           <th class="fixcol"></th>
@@ -2017,7 +2151,7 @@ function getAccounts(keywords) {
       </thead>
       <tbody>
         <tr ng-repeat="row in c.data.grid.list">
-          <td class="fixcol"><a href="#" title="{{row.description}}">{{row.name}}</a></td>
+          <td class="fixcol"><a href="javascript:void(0)" data-toggle="tooltip" title="{{row.tooltip}}" ng-click="c.itemDetail(row)">{{row.name}}</a></td>
           <td class="cell" ng-repeat="col in c.data.grid.cols">
            <div ng-if="c.data.grid.relType.type == 'check'">
              <input type="checkbox" ng-model="c.data.grid[row.sys_id][col.sys_id].checked" 
@@ -2054,16 +2188,34 @@ function getAccounts(keywords) {
 
       <span class="clearfix"></span>
     </div>
+    <div id="siteLoader">
+        <i>Loading&hellip;</i>
+    </div>
+    <iframe width="500" height="400" ng-src="{{c.detailFrame}}"></iframe>
 </section>
-  <! *---* Stakeholder Fragekatalog -------------------------------------------->
-  <! TODO Rolle, Netzwerk und Comment einbauen
+  	<!---* Accounts -->
+  <div ng-if="c.data.show.accounts">
+  	<item-editor art="itemlist" items="c.data.d.accounts" filteron=c.data.filterOn
+              openclose=true 
+              debug=false
+              reltype=hit
+              accountid="c.data.account.sys_id" relname="accAndTop"
+              account="c.data.d.accounts[c.data.account.sys_id]"
+              chg="c.chgAccState(fromId, toId, relName)"
+              saveobj="c.saveNewObj(relItem, relName)"
+              comment=true
+              log="c.log(fromId, toId, relName)">
+   </item-editor>
+  </div> 
+
+  <!---* Stakeholder Fragekatalog -->
+  <!-- TODO Rolle, Netzwerk und Comment einbauen
   <div ng-if="c.data.show.stakeholder">
 
-d
-  </div>  
-	<! *---* Situations Fragekatalog -------------------------------------------->
+  </div> --> 
+	<!--  Situations Fragekatalog -->
   <div ng-if="c.data.show.situations">
-  	<item-editor art="item" items="c.data.q.situations" filteron=c.data.filterOn
+  	<item-editor art="itemlist" items="c.data.q.situations" filteron=c.data.filterOn
               openclose=false 
               debug=false
               reltype=hit
@@ -2074,9 +2226,9 @@ d
               log="c.log(fromId, toId, relName)">
    </item-editor>
   </div> 
-	<! *---* Challenges Fragekatalog -->
+	<!---* Challenges Fragekatalog -->
   <div ng-if="c.data.show.challenges">
-  	<item-editor art="item" items="c.data.q.challenges" filteron=c.data.filterOn
+  	<item-editor art="itemlist" items="c.data.q.challenges" filteron=c.data.filterOn
               openclose=false 
               debug=false
               reltype=hit
@@ -2087,21 +2239,52 @@ d
               log="c.log(fromId, toId, relName)">
    </item-editor>
   </div> 
-  	<! *---* Solution Fragekatalog -------------------------------------------->
-  <div ng-if="c.data.show.solutions">
-  	<item-editor art="item" items="c.data.q.solutions" filteron=c.data.filterOn
-              openclose=false 
-              debug=false
-              reltype=hit
-              accountid="c.data.account.sys_id" relname="accHasSol"
-              account="c.data.d.accounts[c.data.account.sys_id]"
-              chg="c.chgAccState(fromId, toId, relName)"
-              saveobj="c.saveNewObj(relItem, relName)"
-              log="c.log(fromId, toId, relName)">
-   </item-editor>
-  </div> 
 
-  <! *---* All starting with Situations -->
+	<!---* All starting with Solutions -->
+  <div ng-repeat="solution in c.data.d.accounts[c.data.account.sys_id].accHasSol" ng-if="c.data.show.solutions">
+    <div class="container-fluid" ng-if="solution.included || !c.data.filterOn">
+      <div class="panel panel-default">
+        <div class="panel-heading"> <!-- Solution -->
+          <item-editor art="item" item="solution" reltype="state" filteron=c.data.filterOn
+                       openclose=ture namefield="solution" descriptionfield="description"
+                       accountid="c.data.account.sys_id" 
+                       fromid="c.data.account.sys_id"
+                       relname="accHasSol"
+                       states= "c.data.m.accHasSol.table.relType.values"
+                       toidname="soid"
+                       account="c.data.d.accounts[c.data.account.sys_id]"
+                       fromobj="c.data.d.accounts[c.data.account.sys_id]"
+                       chg="c.chgAccState(fromId, toId, relName)"
+                       saveobj="c.saveNewObj(relItem, relName)"
+                       comment=true col1=3 col2=9
+                       log="c.log(fromId, toId, relName)">
+          </item-editor>
+        </div> <!-- panel-heading -->
+        <div class="panel panel-default"> <!-- Task -->
+          <div class="row" ng-repeat="taskRel in c.data.accounts[c.data.account.sys_id].accHasSol[solution.soid].accHasSta">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <item-editor art="item" item="taskRel" reltype="checked" filteron=c.data.filterOn
+                           openclose=false namefield="short_description" descriptionfield="description"
+                           accountid="c.data.account.sys_id" 
+                           fromid="c.data.account.sys_id"
+                           relname="accHasSta"
+                           toidname="taid"
+                           account="c.data.d.accounts[c.data.account.sys_id]"
+                           fromobj="c.data.d.accounts[c.data.account.sys_id].accHasSol[solution.soid]"
+                           chg="c.chgAccState(fromId, toId, relName)"
+                           saveobj="c.saveNewObj(relItem, relName)"
+                           comment=false col1=3 col2=9
+                           log="c.log(fromId, toId, relName)">
+              </item-editor>
+            </div> <!-- col -->
+          </div> <!-- row -->                     
+        </div> <!--  Panel Task -->
+
+      </div> <!-- panel -->
+    </div> <!-- container -->
+  </div>  <!-- solution -->
+  
+  <!---* All starting with Situations -->
   <span class="check">
       <label>Filter:
         <input type="checkbox" ng-model="c.clientFilter.situation.yes" ng-change="c.filterIn(c.clientFilter.situation, 'hit', 'hit', c.clientFilter.situation.yes)" />${hit}
@@ -2110,9 +2293,175 @@ d
       </label>
   </span>
 
-  <div ng-repeat="situation in c.data.q.situations" ng-if="c.data.show.analyse">  <! --- kein RelItem Achtung eine Funktion auf ng-if ist teuer, wird ständig aufgerufen --->
-
-    
+  <div ng-repeat="situation in c.data.q.situations" ng-if="c.data.show.analyse">
+    <div class="container-fluid" ng-if="situation.included || !c.data.filterOn">
+      <div class="panel panel-default">
+        <div class="panel-heading"> <!-- Situation -->
+          <item-editor art="item" item="situation" reltype="hit" filteron=c.data.filterOn
+                       openclose=true namefield="name" descriptionfield="description"
+                       accountid="c.data.account.sys_id" 
+                       fromid="c.data.account.sys_id"
+                       relname="accHasSit"
+                       toidname="sys_id"
+                       account="c.data.d.accounts[c.data.account.sys_id]"
+                       fromobj="c.data.d.accounts[c.data.account.sys_id]"
+                       chg="c.chgAccState(fromId, toId, relName)"
+                       saveobj="c.saveNewObj(relItem, relName)"
+                       comment=true col1=2 col2=10
+                       log="c.log(fromId, toId, relName)">
+          </item-editor>
+        </div>
+        <!---* Challenges -->
+        <div class="panel-group">
+          <div class="panel-body" ng-if="c.data.d.accounts[c.data.account.sys_id].accHasSit[situation.sys_id].hit=='hit' && situation.show"> <!-- Challenge -->
+            <div class="row">
+              <div class="col-sm-1 col-md-1 col-lg-1"></div>
+              <div class="col-sm-11 col-md-11 col-lg-11">
+                <div class="container-fluid">
+                  <div class="row" ng-repeat="challenge in situation.sitToCha" >
+                    <div class="panel  panel-default">
+                      <div class="panel-heading">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-12">
+                            <item-editor art="item" item="challenge" reltype="hit" filteron=c.data.filterOn
+                                  openclose=false namefield="name" descriptionfield="description"
+                                  accountid="c.data.account.sys_id" 
+                                  fromid="c.data.account.sys_id"
+                                  relname="accHasCha"
+                                  toidname="caid"
+                                  account="c.data.d.accounts[c.data.account.sys_id]"
+                                  fromobj="c.data.d.accounts[c.data.account.sys_id]"
+                                  chg="c.chgAccState(fromId, toId, relName)"
+                                  saveobj="c.saveNewObj(relItem, relName)"
+                                  comment=false col1=3 col2=9
+                                  log="c.log(fromId, toId, relName)">
+                            </item-editor>
+                          </div> <!-- col -->
+                        </div> <!-- row -->
+                      </div> <!-- "panel-heading" -->
+                      <div class="panel-body">
+                        <!---* Roles -->              
+                        <div class="container-fluid" ng-if="c.data.d.accounts[c.data.account.sys_id].accHasCha[challenge.caid].hit=='hit'"> 
+                          <div class="row">
+                            <div class="col-sm-3 col-md-3 col-lg-3"></div>
+                              <!-- neue Beziehung von Challenge zu Rolle erfassen -->
+                              <div class="row" ng-if="c.data.m.chaHasRol.insertObj">
+                                <div class="col-sm-3 col-md-3 col-lg-3" ></div>
+                                <div class="col-sm-9 col-md-9 col-lg-9" >
+                                  <select ng-model="c.data.chaHasRol['new'].rid" ng-change="c.chgAccState(challenge.caid, c.data.chaHasRol['new'].rid, 'chaHasRol')">
+                                    <option ng-repeat="role in c.data.q.roles" value="{{role.sys_id}}">{{role.name}}</option>
+                                  </select>
+                                </div>  <!-- col -->
+                              </div> <!-- row -->
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                              New Role <button class="fa fa-plus" ng-click="c.newObj(challenge.caid, 'chaHasRol')"></button>
+                            </div>  <!-- col -->
+                            <!-- neue Task zu Challenge erfassen --->
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                              New Task <button class="fa fa-plus" ng-click="c.newItem({'acid':c.data.d.accounts[c.data.account.sys_id].accHasCha[challenge.caid].sys_id, 'aid':c.data.account.sys_id}, 'accHasCta')"></button>
+                            </div>  <!-- col -->
+                            <div class="col-sm-5 col-md-5 col-lg-5" ng-if="c.data.m.accHasCta.insertObj">
+                              <input class="form-control"  placeholder="short description" ng-model="c.data.accHasCta['new'].task" 
+                                     ng-change="c.data.accHasCta['new'].changed=true" />
+                              <input class="form-control"  placeholder="description" ng-model="c.data.accHasCta['new'].description" 
+                                     ng-change="c.data.accHasCta['new'].changed=true" />
+                              <button class="fa fa-check" ng-click="c.data.accHasCta['new'].checked=false; c.saveNewObj(c.data.accHasCta['new'], 'accHasCta')"
+                                      ng-if="c.data.accHasCta['new'].changed"></button>                           
+                            </div> <!-- col  -->
+                          </div> <!--  row  -->
+                          <!-- rollen anzeigen -->
+                          <!--  TODO komplexität des Radio Boxen models, wir haben mehrere beteiligte RelItems chaHasRol, accHasRol und ConHasRol -->
+                          <div class="row" ng-repeat="role in c.data.q.challenges[challenge.caid].chaHasRol">
+                            <!-- div class="col-sm-1 col-md-1 col-lg-1"></div>  -->
+                            <div class="col-sm-3 col-md-3 col-lg-3">  <!-- ng-model="account[relname][item[toidname]].hit" -->
+                              <item-editor art="item" item="challenge" reltype="hit" filteron=c.data.filterOn
+                                openclose=false   namefield=null descriptionfield=null       
+                                accountid="c.data.account.sys_id" 
+                                fromid="c.data.d.accounts[c.data.account.sys_id].accHasRol[role.roid].coid"
+                                relname="conHasCha"
+                                toidname="caid"
+                                account="c.data.d.accounts[c.data.account.sys_id]"
+                                fromobj="c.data.d.contacts[c.data.d.accounts[c.data.account.sys_id].accHasRol[role.roid].coid]"                                  
+                                chg="c.chgAccState(fromId, toId, relName)"
+                                saveobj="c.saveNewObj(relItem, relName)"
+                                comment=false  col1=11 col2=1
+                                log="c.log(fromId, toId, relName)">
+                              </item-editor>
+                            </div> 
+                            <div class="col-sm-6 col-md-6 col-lg-6"> 
+                             <item-editor art="item" item="role" reltype="select" filteron=c.data.filterOn
+                                openclose=false     namefield="name"  descriptionfield="description"    
+                                accountid="c.data.account.sys_id" 
+                                fromid="c.data.account.sys_id"
+                                relname="accHasRol"
+                                toidname="roid"
+                                account="c.data.d.accounts[c.data.account.sys_id]"
+                                fromobj="c.data.d.accounts[c.data.account.sys_id]"
+                                chg="c.chgAccState(fromId, toId, relName)"
+                                saveobj="c.saveNewObj(relItem, relName)"
+                                comment=false  col1=9 col2=1
+                                selectid="coid"
+                                selectrel="accHasCon"
+                                descriptionfield="{{c.data.d.accounts[c.data.account.sys_id].accHasCon[c.data.d.accounts[c.data.account.sys_id].conHasRol[role.roid].coid].network}}">
+                              </item-editor>
+                            </div> <!-- col -->
+                            <div class="col-sm-2 col-md-2 col-lg-2"> 
+                              <span><button class="fa fa-plus" ng-click="c.editDetailDialog(c.newObj(c.data.account.sys_id, 'accHasCon'),c.data.m.accHasCon)"></button></span>
+                            </div>  <!-- col -->
+                          </div>  <!-- row  -->
+                        </div> <!-- container-->
+                        <div class="panel panel-default" ng-if="c.data.accounts[c.data.account.sys_id].accHasCha[challenge.caid].hit=='hit'"> <!-- Solution -->
+                          <div class="row" ng-repeat="solution in c.data.q.challenges[challenge.caid].chaToSol">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                              <item-editor art="item" item="solution" reltype="state" filteron=c.data.filterOn
+                                    openclose=false namefield="solution" descriptionfield="description"
+                                    accountid="c.data.account.sys_id" 
+                                    fromid="c.data.account.sys_id"
+                                    relname="accHasSol"
+                                    states= "c.data.m.accHasSol.table.relType.values"
+                                    toidname="soid"
+                                    account="c.data.d.accounts[c.data.account.sys_id]"
+                                    fromobj="c.data.d.accounts[c.data.account.sys_id]"
+                                    chg="c.chgAccState(fromId, toId, relName)"
+                                    saveobj="c.saveNewObj(relItem, relName)"
+                                    comment=false col1=3 col2=9
+                                    log="c.log(fromId, toId, relName)">
+                              </item-editor>
+                            </div> <!-- col -->
+                          </div> <!-- row -->                     
+                        </div> <!--  Panel Solution -->
+                        <div class="panel panel-default"> <!-- Task -->
+                          <div class="row" ng-repeat="taskRel in c.data.accounts[c.data.account.sys_id].accHasCha[challenge.caid].accHasCta">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                              <item-editor art="item" item="taskRel" reltype="checked" filteron=c.data.filterOn
+                                    openclose=false namefield="short_description" descriptionfield="description"
+                                    accountid="c.data.account.sys_id" 
+                                    fromid="c.data.account.sys_id"
+                                    relname="accHasCta"
+                                    toidname="taid"
+                                    account="c.data.d.accounts[c.data.account.sys_id]"
+                                    fromobj="c.data.d.accounts[c.data.account.sys_id].accHasSol[challenge.caid]"
+                                    chg="c.chgAccState(fromId, toId, relName)"
+                                    saveobj="c.saveNewObj(relItem, relName)"
+                                    comment=false col1=3 col2=9
+                                    log="c.log(fromId, toId, relName)">
+                              </item-editor>
+                            </div> <!-- col -->
+                          </div> <!-- row -->                     
+                        </div> <!--  Panel Task -->
+                      </div> <!-- panel body -->
+                    </div> <!-- panel -->
+                  </div> <!-- row -->    
+                </div> <!-- contaner -->
+               </div> <!-- col -->              
+            </div> <!-- row -->
+          </div> <!-- panel body -->
+        </div> <!-- panel group -->
+      </div> <!-- panel -->
+    </div> <!-- container -->
+  </div> <!-- End Situations list -->
+  </div>
+  <div ng-repeat="situation in c.data.q.situations" ng-if="c.data.show.analyse">  <!--- kein RelItem Achtung eine Funktion auf ng-if ist teuer, wird ständig aufgerufen --->    
     <table class="table table-striped table-responsive" ng-if="situation.included || !c.data.filterOn">
     <tr>
       <td> 
@@ -2125,8 +2474,7 @@ d
                                                    ng-change="c.chgAccState(c.data.account.sys_id,situation.sys_id, 'accHasSit')"/>No</label>
       </td>
       <td>{{situation.description}}
-        <! ---* comment --->
-        {{c.data.d.accounts[c.data.account.sys_id].accHasSit[situation.sys_id].changed}}
+        <!---* comment --->
         <input class="form-control"  placeholder="comment" ng-model="c.data.d.accounts[c.data.account.sys_id].accHasSit[situation.sys_id].comment" 
                ng-change="c.data.d.accounts[c.data.account.sys_id].accHasSit[situation.sys_id].changed=true" />
         <button class="fa fa-check" ng-click="c.saveNewObj(c.data.d.accounts[c.data.account.sys_id].accHasSit[situation.sys_id], 'accHasSit'); c.data.d.accounts[c.data.account.sys_id].accHasSit[situation.sys_id].changed=false"
@@ -2137,8 +2485,8 @@ d
       <td>
       </td>
     <td>
-        <! *---* Challenges -->
-        <table class="table table-striped table-responsive" ng-if="c.data.d.accounts[c.data.account.sys_id].accHasSit[situation.sys_id].hit=='hit' && situation.show">
+        <!--- Challenges -->
+        <table class="table table-striped table-responsive table-condensed" ng-if="c.data.d.accounts[c.data.account.sys_id].accHasSit[situation.sys_id].hit=='hit' && situation.show">
           <tr ng-repeat="challenge in situation.sitToCha" >
             <td> 
               {{challenge.name}}<br>
@@ -2149,73 +2497,60 @@ d
             </td>
             <td>{{challenge.description}}<br>
               {{challenge.reason}}
-              <! *---* Roles -->
-              
+              <!---* Roles -->              
               <table class="table table-striped table-responsive" ng-if="c.data.d.accounts[c.data.account.sys_id].accHasSit[situation.sys_id].hit=='hit'"> 
-                  <! *---- neue Beziehung von Challenge zu Rolle erfassen ------>
-                  <td ng-if="c.data.chaHasRol.insertObj">
+                  <!-- neue Beziehung von Challenge zu Rolle erfassen -->
+                <tr>
+                  <td ng-if="c.data.m.chaHasRol.insertObj">
                     <select ng-model="c.data.chaHasRol['new'].rid" ng-change="c.chgAccState(challenge.caid, c.data.chaHasRol['new'].rid, 'chaHasRol')">
                       <option ng-repeat="role in c.data.q.roles" value="{{role.sys_id}}">{{role.name}}</option>
                     </select>
                   </td>
                   <td>New Role <button class="fa fa-plus" ng-click="c.newObj(challenge.caid, 'chaHasRol')"></button></td>
-                  <! *---- neue Task zu Challenge erfassen ------>
+                  <!-- neue Task zu Challenge erfassen -->
                   <td>New Task <button class="fa fa-plus" ng-click="c.newItem({'acid':c.data.d.accounts[c.data.account.sys_id].accHasCha[challenge.caid].sys_id, 'aid':c.data.account.sys_id}, 'accHasCta')"></button></td>
-                  <td ng-if="c.data.accHasCta.insertObj">
+                  <td ng-if="c.data.m.accHasCta.insertObj">
                     <input class="form-control"  placeholder="short description" ng-model="c.data.accHasCta['new'].task" 
                            ng-change="c.data.accHasCta['new'].changed=true" />
                     <input class="form-control"  placeholder="description" ng-model="c.data.accHasCta['new'].description" 
                            ng-change="c.data.accHasCta['new'].changed=true" />
-
                     <button class="fa fa-check" ng-click="c.data.accHasCta['new'].checked=false; c.saveNewObj(c.data.accHasCta['new'], 'accHasCta')"
                             ng-if="c.data.accHasCta['new'].changed"></button>                           
                   </td>
+                <tr>
                 <!-- rollen anzeigen -->
-                // TODO komplexität des Radio Boxen models, wir haben mehrere beteiligte RelItems chaHasRol, accHasRol und ConHasRol
-    <item-editor art="relitem" items="c.data.q.challenges[challenge.caid].chaHasRol" 
-              showwhen="c.data.d.accounts[c.data.account.sys_id].accHasSit[situation.sys_id].hit=='hit'"
-              openclose=false 
-              accountid="c.data.account.sys_id" 
-              relname="accHasRol"
-              toidname="roid"
-              account="c.data.d.accounts[c.data.account.sys_id]"
-              chg="c.chgAccState(fromId, toId, relName)"
-              saveobj="c.saveNewObj(relItem, relName)"
-              log="c.log(fromId, toId, relName)">
-   </item-editor>
-
+                <!--  TODO komplexität des Radio Boxen models, wir haben mehrere beteiligte RelItems chaHasRol, accHasRol und ConHasRol -->
                 <tr ng-repeat="role in c.data.q.challenges[challenge.caid].chaHasRol">
                   <td> 
-                    <!--  Contact ------------->
-                    <! * Contact has Challenge account.contact(role)  TODO: wenn der Account die Rolle aber noch nicht hat?-->
-                    <! * hat der Kontakt die Challenge? schauen, welcher Contact im Account diese Rolle hat und schauen, ob diese Rolle die Challenge hat ->
+                    <!--  Contact --->
+                    <!-- * Contact has Challenge account.contact(role)  TODO: wenn der Account die Rolle aber noch nicht hat?-->
+                    <!-- * hat der Kontakt die Challenge? schauen, welcher Contact im Account diese Rolle hat und schauen, ob diese Rolle die Challenge hat -->
                     <label class="rate-hit"><input type="radio" value="hit" ng-model="c.data.d.contacts[c.data.d.accounts[c.data.account.sys_id].accHasRol[role.roid].coid].conHasCha[challenge.caid].hit" 
-                                                   ng-change="c.chgAccState(c.data.d.accounts[c.data.account.sys_id].accHasRol[role.roid].coid,challenge.caid, 'conHasCha')" />Yes</label>
+                                                                               ng-change="c.chgAccState(c.data.d.accounts[c.data.account.sys_id].accHasRol[role.roid].coid,challenge.caid, 'conHasCha')" />Yes</label>
                     <label class="rate-miss"><input type="radio" value="miss" ng-model="c.data.d.contacts[c.data.d.accounts[c.data.account.sys_id].accHasRol[role.roid].coid].conHasCha[challenge.caid].hit" 
                                                     ng-change="c.chgAccState(c.data.d.accounts[c.data.account.sys_id].accHasRol[role.roid].coid, challenge.caid, 'conHasCha')"/>No</label>
                   </td> 
                   <td ng-if="!c.data.chaHasRol.insertObj">{{role.name}}</td>
-
-                  <td>Name:</td>
-                  <td>
+                  <td>Name:                  
                     <select ng-model="c.data.d.accounts[c.data.account.sys_id].accHasRol[role.roid].coid" 
                             ng-change="c.chgAccState(c.data.account.sys_id, role.roid, 'accHasRol')">
                       <option ng-repeat="contact in c.data.d.accounts[c.data.account.sys_id].accHasCon" value="{{contact.sys_id}}">{{contact.name}}</option>
                     </select>
                     <td>{{c.data.d.accounts[c.data.account.sys_id].accHasCon[c.data.d.accounts[c.data.account.sys_id].conHasRol[role.roid].coid].network}}</td>
-                  <td>
-                    <! *--- neuen Contact erfassen -------->
-                    <input class="form-control"  placeholder="neuen Contact Vorname Name" ng-model="c.data.m.accHasCon['new'].name" 
-                           ng-if="c.data.m.accHasCon.insertObj"/>
-                    <input class="form-control"  placeholder="network" ng-model="c.data.m.accHasCon['new'].network" 
-                           ng-if="c.data.m.accHasCon.insertObj"/>
-                  </td>
+                    <td>
+                      <!--- neuen Contact erfassen -->
+                      <input class="form-control"  placeholder="neuen Contact Vorname Name" ng-model="c.data.m.accHasCon['new'].name" 
+                             ng-if="c.data.m.accHasCon.insertObj"/>
+                      <input class="form-control"  placeholder="network" ng-model="c.data.m.accHasCon['new'].network" 
+                             ng-if="c.data.m.accHasCon.insertObj"/>
+                    </td>
                   <td><button class="fa fa-plus" ng-click="c.editDetailDialog(c.newObj(c.data.account.sys_id, 'accHasCon'),c.data.m.accHasCon)"></button></td>
                   <td><button class="fa fa-check" ng-click="c.saveNewObj(c.data.accHasCon['new'], 'accHasCon')" 
                               ng-if="c.data.m.accHasCon.insertObj"></button></td>
+                
                 </tr>
               </table>
-              <! *---* Solutions -->
+              <!---* Solutions -->
               <table class="table table-striped table-responsive" ng-if="c.data.d.accounts[c.data.account.sys_id].accHasCha[challenge.caid].hit=='hit'"> 
                 <tr ng-repeat="solution in c.data.q.challenges[challenge.caid].chaToSol">
                   <td> 
@@ -2228,13 +2563,13 @@ d
                   </td> 
                   <td> {{solution.solution}} </td>
                   <td>{{solution.description}}
-                     <! ---* comment --->
+                     <!--* comment --->
                     <input class="form-control"  placeholder="comment" ng-model="c.data.d.accounts[c.data.account.sys_id].accHasSol[solution.soid].comment" 
                            ng-change="c.data.d.account[c.data.account.sys_id].accHasSol[solution.soid].changed=true" />
                     <button class="fa fa-check" ng-click="c.saveNewObj(c.data.d.accounts[c.data.account.sys_id].accHasSol[solution.soid], 'accHasSol'); c.data.d.accounts[c.data.account.sys_id].accHasSol[solution.soid].changed=false"
                 ng-if="c.data.d.account[c.data.account.sys_id].accHasSol[solution.soid].changed"></button>                           
 
-                    <! *---* Skills -->
+                    <!---* Skills -->
                     <table class="table table-striped table-responsive" ng-if="c.data.d.accounts[c.data.account.sys_id].accHasCha[challenge.caid].hit=='hit'"> 
                       <tr ng-repeat="skill in c.data.q.solutions[solution.soid].solToSki">
                         <td>
@@ -2249,7 +2584,7 @@ d
                   </td>
                 </tr>
               </table>
-              <! *---*  Competitive Solutions -->
+              <!---*  Competitive Solutions -->
               <table class="table table-striped table-responsive" ng-if="c.data.d.accounts[c.data.account.sys_id].accHasCha[challenge.caid].hit=='hit'"> 
                 <tr ng-repeat="competitive_solution in c.data.q.challenges[challenge.caid].chaToCso">
                   <td>
@@ -2261,7 +2596,7 @@ d
                   <td>{{competitive_solution.description}}</td>
                 </tr>
               </table> 
-              <! *---* Tasks sind nicht im account, sondern darüber  -->
+              <!---* Tasks sind nicht im account, sondern darüber  -->
               <table class="table table-striped table-responsive" ng-if="c.data.d.accounts[c.data.account.sys_id].accHasCha[challenge.caid].hit=='hit'"> 
                 <tr ng-repeat="taskRel in c.data.d.accounts[c.data.account.sys_id].accHasCha[challenge.caid].accHasCta">
                   <td>

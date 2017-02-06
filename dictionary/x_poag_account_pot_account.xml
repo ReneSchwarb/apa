@@ -12,6 +12,9 @@
                 <element label="Pharma" sequence="5" value="Pharma"/>
                 <element label="Logistics" sequence="6" value="Logistics"/>
                 <element label="Government" sequence="7" value="Government"/>
+                <element label="Retail" sequence="8" value="Retail"/>
+                <element label="Media" sequence="9" value="Media"/>
+                <element label="Mechanical" sequence="10" value="Mechanical"/>
             </choice>
         </element>
         <element label="description" max_length="200" name="description" type="string"/>

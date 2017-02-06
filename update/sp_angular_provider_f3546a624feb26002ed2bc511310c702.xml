@@ -19,21 +19,29 @@
 
 		scope: {
 			items: "=",   // liste der Objekte items oder relItems
+			item: "=",		// wenn nicht eine Liste sondern nur ein item gefordert ist
 			showwhen: "=",
 			filteron: "=",    // filteron true = filter beachten, false heisst ignorieren
 			openclose:  "=",  // soll der Pfeil um die Childs zu öffen angezeigt werden? 
-			accountid: "=",    // die id des selektierten accounts
-			account: "=",      // json Objekt mit den daten zum Account
+			accountid: "=",    // die id des selektierten accounts wird ersetzt durch fromid
+			fromid: "=",       // id von der die Beziehung ausgeht, accHasCha = account id , conHasCha contact id
+			fromobj: "=",      // das Objekt auf dem wir arbeiten contact, account
+			account: "=",      // json Objekt mit den daten zum Account wirdd druch fromobj ersetzt
 			relname: '@relname',  // @ Parameter seien immer vom Typ String
-			toidname: "@",        // bei art=relitem das asId Feld
+			toidname: "@",        // bei art=relitem das asId Feld, bei item sys_id
 			chg:'&',
 			saveobj:'&',
 			log: '&',
-			reltype: "@",  // relType: check, hit, relevance
+			reltype: "@",  // relType: checked, hit, relevance, state
+			states: "=",    // {'needs':'needs', 'has':'has', 'no':'no'}
 			debug: "=",
 			namefield: "@",
-			decscriptionfield: "@",
-			comment: "="
+			descriptionfield: "@",
+			comment: "=",   // true oder false. hat es ein comment Feld?
+			selectid: "@",    // beim reltype select
+			selectrel: "@",     // bei reltype select, woher kommen die optione
+			col1: "@",  // anzahl Spalten von 12 im ersten Teil
+			col2: "@"   // Anzahl Spalten von 12 im zweiten Teil
 		}
 
 	};
@@ -45,7 +53,7 @@
         <sys_created_on>2016-12-10 15:57:48</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>f3546a624feb26002ed2bc511310c702</sys_id>
-        <sys_mod_count>115</sys_mod_count>
+        <sys_mod_count>129</sys_mod_count>
         <sys_name>itemEditor</sys_name>
         <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
         <sys_policy/>
@@ -53,7 +61,7 @@
         <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
         <sys_update_name>sp_angular_provider_f3546a624feb26002ed2bc511310c702</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2016-12-18 11:24:52</sys_updated_on>
+        <sys_updated_on>2017-02-04 13:45:41</sys_updated_on>
         <type>directive</type>
     </sp_angular_provider>
 </record_update>
