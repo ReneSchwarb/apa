@@ -51,7 +51,7 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-10-27 05:23:11</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>66fd21184fb6a2002ed2bc511310c7a2</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name>x_poag_account_pot_apa_task</sys_name>

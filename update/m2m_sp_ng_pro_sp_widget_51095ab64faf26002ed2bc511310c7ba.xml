@@ -6,7 +6,7 @@
         <sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-12-11 09:43:09</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>51095ab64faf26002ed2bc511310c7ba</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>spButton.Account Potential Analyse</sys_name>

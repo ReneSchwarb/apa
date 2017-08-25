@@ -5,13 +5,13 @@
             <element>name</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2016-12-19 10:38:07</sys_created_on>
-            <sys_id>e4523f994f37a2002ed2bc511310c7ac</sys_id>
+            <sys_created_on>2017-03-23 08:21:10</sys_created_on>
+            <sys_id>c768572f4f6d3e402ed2bc511310c7bb</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_poag_account_pot_account" sys_domain="global" view="00b83432dd3131009190bcc50a765115">2c523f994f37a2002ed2bc511310c7a9</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2016-12-19 10:38:07</sys_updated_on>
+            <sys_updated_on>2017-03-23 08:21:10</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -19,13 +19,13 @@
             <element>branche</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2016-12-19 10:38:07</sys_created_on>
-            <sys_id>68523f994f37a2002ed2bc511310c7ac</sys_id>
+            <sys_created_on>2017-03-23 08:21:10</sys_created_on>
+            <sys_id>4b68572f4f6d3e402ed2bc511310c7bb</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_poag_account_pot_account" sys_domain="global" view="00b83432dd3131009190bcc50a765115">2c523f994f37a2002ed2bc511310c7a9</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2016-12-19 10:38:07</sys_updated_on>
+            <sys_updated_on>2017-03-23 08:21:10</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -33,13 +33,41 @@
             <element>active</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2016-12-19 10:38:07</sys_created_on>
-            <sys_id>e8523f994f37a2002ed2bc511310c7ac</sys_id>
+            <sys_created_on>2017-03-23 08:21:10</sys_created_on>
+            <sys_id>cb68572f4f6d3e402ed2bc511310c7bb</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_poag_account_pot_account" sys_domain="global" view="00b83432dd3131009190bcc50a765115">2c523f994f37a2002ed2bc511310c7a9</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2016-12-19 10:38:07</sys_updated_on>
+            <sys_updated_on>2017-03-23 08:21:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>type</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-03-23 08:21:10</sys_created_on>
+            <sys_id>4f68572f4f6d3e402ed2bc511310c7bb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_poag_account_pot_account" sys_domain="global" view="00b83432dd3131009190bcc50a765115">2c523f994f37a2002ed2bc511310c7a9</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-03-23 08:21:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>description</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-03-23 08:21:10</sys_created_on>
+            <sys_id>cf68572f4f6d3e402ed2bc511310c7bb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_poag_account_pot_account" sys_domain="global" view="00b83432dd3131009190bcc50a765115">2c523f994f37a2002ed2bc511310c7a9</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-03-23 08:21:10</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -51,7 +79,7 @@
             <sys_class_name>sys_ui_section</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2016-12-19 10:38:07</sys_created_on>
-            <sys_customer_update>true</sys_customer_update>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_id>2c523f994f37a2002ed2bc511310c7a9</sys_id>
             <sys_mod_count>0</sys_mod_count>

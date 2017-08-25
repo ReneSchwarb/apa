@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database>
     <element label="Contact has Challenge" max_length="40" name="x_poag_account_pot_contact_has_challenge" type="collection">
-        <element label="Challenge" max_length="32" name="challenge" reference="x_poag_account_pot_challenge" reference_floats="true" type="reference"/>
+        <element display="true" label="Challenge" max_length="32" name="challenge" reference="x_poag_account_pot_challenge" reference_floats="true" type="reference"/>
         <element label="Checked" max_length="40" name="checked" type="boolean"/>
         <element attributes="edge_encryption_enabled=true" label="Comment" max_length="100" name="comment" type="string"/>
         <element label="Contact" max_length="32" name="contact" reference="x_poag_account_pot_contact" reference_floats="true" type="reference"/>

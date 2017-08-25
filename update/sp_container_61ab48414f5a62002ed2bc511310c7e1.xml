@@ -14,7 +14,7 @@
         <sys_class_name>sp_container</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-10-04 09:37:38</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>61ab48414f5a62002ed2bc511310c7e1</sys_id>
         <sys_mod_count>3</sys_mod_count>
         <sys_name>Customer Portal - Container 2</sys_name>

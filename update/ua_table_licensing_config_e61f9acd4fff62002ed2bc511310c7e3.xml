@@ -9,7 +9,7 @@
         <sys_class_name>ua_table_licensing_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-12-18 09:56:03</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>e61f9acd4fff62002ed2bc511310c7e3</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>x_poag_account_pot_busdev_knows_contact</sys_name>

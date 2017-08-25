@@ -51,7 +51,7 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-12-18 09:56:02</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>99eede0d4fff62002ed2bc511310c764</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>du</sys_name>

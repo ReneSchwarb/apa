@@ -149,7 +149,7 @@
             <sys_class_name>sys_ui_list</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2016-12-21 05:49:10</sys_created_on>
-            <sys_customer_update>true</sys_customer_update>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_id>23534d4a4f3fa2002ed2bc511310c741</sys_id>
             <sys_mod_count>0</sys_mod_count>

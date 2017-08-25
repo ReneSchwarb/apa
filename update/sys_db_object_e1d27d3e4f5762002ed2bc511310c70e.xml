@@ -21,7 +21,7 @@
         <sys_class_name>sys_db_object</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-11-28 20:42:13</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>e1d27d3e4f5762002ed2bc511310c70e</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Situation of Branche</sys_name>

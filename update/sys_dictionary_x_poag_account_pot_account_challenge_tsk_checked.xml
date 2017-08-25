@@ -51,7 +51,7 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-10-27 06:01:18</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>373631984fb6a2002ed2bc511310c78b</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Checked</sys_name>

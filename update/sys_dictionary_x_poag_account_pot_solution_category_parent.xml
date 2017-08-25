@@ -51,7 +51,7 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-12-17 18:11:52</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>37e64ffc4f3f62002ed2bc511310c7ab</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Parent</sys_name>

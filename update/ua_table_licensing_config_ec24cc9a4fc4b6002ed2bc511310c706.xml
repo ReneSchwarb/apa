@@ -9,7 +9,7 @@
         <sys_class_name>ua_table_licensing_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-01-03 06:07:05</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>ec24cc9a4fc4b6002ed2bc511310c706</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>x_poag_account_pot_role_interested_in_topic</sys_name>

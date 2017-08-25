@@ -6,7 +6,7 @@
 	// $uiModal wird für den Dialog benötigt https://angular-ui.github.io/bootstrap/#/modal
 	
   var c = this;
-
+	var debug = false;
   // dies sind globale Schalter mit filterOn werden alle Filter global unwirksam
 	if (typeof c.data.filterOn == 'undefined') c.data.filterOn = false;
 	if (typeof c.data.mapOn    == 'undefined') c.data.mapOn = false;
@@ -28,10 +28,11 @@
 
 		var fromRel = meta.from.refField;
 		console.log("C27 reloadData fromRel:"+fromRel);
-		inp.reload.meta = c.data.m[fromRel];
+
 		var fromList = fromRel+"s";
 		console.log("C30 reloadData fromList:"+fromList);
-
+		inp.reload.meta = c.data.m[fromList];
+		
 		var fromData = c.data;
 		//console.log("C33 reloadData root:"+inp.reload.meta.table.root);
 
@@ -78,7 +79,7 @@
 		var match = true;
 		for (var key in filters) {
 			var filter = filters[key];
-			console.log("C21 match="+match+" filter:"+jsonPrint(filter));
+			if (debug) console.log("C78 match="+match+" filter:"+jsonPrint(filter));
 			switch(filter.op) {
 					case '=':
 							if (key =='and') match = match && (filter.field == filter.value);
@@ -92,29 +93,114 @@
 		}
 		return match;
 	}
-	
-	// clientFilter von Tabellen, damit können Tabellen gefiltert werden
-	// ein filter enthält Bedingungen zu mehreren Feldern, im Moment sind alle 
-	// mit oder verknüpft
-	c.filterTest = function(relItem, filter) {
-		console.log("C43 filter:"+jsonPrint(filter));
-		var match = false;
-		var filterEmpty = true;
-		for (var field in filter) {  // sys_id
-			filterEmpty = false;
-			var value = relItem[field];  // die sysId im Item
-			console.log("c47 field:"+field+" value:"+value);
-			var f = filter[field];
+	c.filterMatch = function (filter, asId, value) {
+			console.log("C93 asId:"+asId+" value:"+value);
+			var f = filter['sys_id'];  // ist das immer sys_id?
 			var op = "";
 			var expected = "";
+		  var match = false;
+		  console.log("C97 filter:"+jsonPrint(filter));
+		  console.log("C98 f:"+jsonPrint(f));
 			for(var key in f) {
 				op = f[key];
 				expected = key;
-				console.log("C50 operation:"+op+" expected:"+expected);
+				console.log("C100 operation:"+op+" expected:"+expected);
 				if (op == "=") match = match || (value == expected); 
 				else match = match || (value != expected); 
 			} 
+		  return match;
+	}
+	// clientFilter von Tabellen, damit können Tabellen gefiltert werden
+	// ein filter enthält Bedingungen zu mehreren Feldern, im Moment sind alle 
+	// mit oder verknüpft
+	// TODO: field ist immer sys_id, wenn zum Bps eine topic im Filter gesetzt wird, steht sys_id = (sysid von topic)
+	// das funktioniert aber nicht, wenn ich etwas anderes als topics mit topics filtern will, zb Solutions
+	// dh ich muss wissen, welche asif feld auf zB topic verweist.
+	// data.f.filterIn = "sys_id" :{"57d92d984fc3a20089fddf601310c767" :"=", "d7fb97204ffaa20089fddf601310c746" :"="}
+	// ich bekomme accHasSol und muss SollToTop filtern
+	// später auf filters Variable umstellen 
+	c.filterTest = function(item, filter, listName) {
+		if (debug) console.log("filter length:"+angular.equals(filter, {}));
+		if (angular.equals(filter, {})) return true;
+		var asId = "sys_id";   //default
+		if (debug) console.log("C122 listName:"+listName)
+		var relName = null;
+		
+		if (listName == 'solutions') {
+			// dann ist das item ein solution Objekt
+			// im solution Objekt kann es ein solOfTop relitem haben
+			// im solOfTop relItem hat es im to Objekt ein asId='toid' das auf das topic zeigt
+			relName = 'solOfTop';
+			asId = 'toid'
+			// filterName ist im Moment immer undefined
+			if (typeof filterName != 'undefined') {
+				filter = c.data.f.filterIn[filterName];
+				if (debug) console.log("C134 filter:"+jsonPrint(filter));
+				if (c.data.m[relName].from.refield == filterName) {
+					asId = c.data.m[relName].from.asId;
+				} else if (c.data.m[relName].to.refield == filterName) {
+					asId = c.data.m[relName].to.asId;
+				}
+			}
+		} else if (listName == 'challenges') {
+				relName = 'chaToTop';
+				asId = 'toid'			
+		} else if (listName == 'situation') {
+				relName = 'sitToTop';
+				asId = 'toid'			
 		}
+
+		if (debug) console.log("C149 asId:"+asId+" relName:"+relName);
+
+		if (debug) console.log("C151 item:"+jsonPrint(item)+" filter:"+jsonPrint(filter));
+		
+		
+//		"66452b944ff6a20089fddf601310c796" :{"sys_id" :"66452b944ff6a20089fddf601310c796"
+//		"solOfTop" :{"842c1b204ffaa20089fddf601310c72d" :{"toid" :"842c1b204ffaa20089fddf601310c72d"
+//		  "sys_id" :"6caa4d474fc0f6002ed2bc511310c763"
+//			"comment" :""}
+//			"0b1c1bec4fbaa20089fddf601310c752" :{"toid" :"0b1c1bec4fbaa20089fddf601310c752"
+//			"sys_id" :"3caa4d474fc0f6002ed2bc511310c74b"
+//			"comment" :""}
+//			"2f194a354fbba2002ed2bc511310c701" :{"toid" :"2f194a354fbba2002ed2bc511310c701"
+//			"sys_id" :"88aac9474fc0f6002ed2bc511310c7a4"
+//			"comment" :""}}
+//		"name" :"ServiceNow Self Service Portal"
+//		"show" :"true"
+//		"description" :""
+//		"changed" :"false"}
+		
+		
+		
+		var match = false;
+		var filterEmpty = true;
+		// im item hat es relItems zu verschiedenen anderen listen, ich muss die beziehungen der 
+		// gesetzten filter topic, branche, etc rausholen
+		// in einem item kann es mehere relItems solOfTop haben, es kann auch andere haben
+		// es kann auch keine haben
+		//for (var relItemName in item) {  // sys_id
+			
+			var value = null;   // sys_id  // default
+			filterEmpty = false;
+			if (relName) {  // jetzt solOfTop
+				toItem = item[relName];  // zB solution
+				if (debug) console.log("C169 toItem:"+jsonPrint(toItem));
+				for (var relItemId in toItem) {  // zB topics
+					var relItem = toItem[relItemId];
+					if (debug) console.log("C172 relItem:"+jsonPrint(relItem));
+					// wenn es keines gibt
+					if (typeof relItem != undefined) {
+						value = relItem[asId];  // die sysId im Item
+					}
+					match = c.filterMatch(filter, asId, value);
+					if (match) return  match;
+				}
+			} else {
+				value = item[asId];   // sys_id  // default
+				match = c.filterMatch(filter, asId, value);
+			}
+
+		//}
 		return filterEmpty || match;
 	}
 	c.filterIn = function(filter, field, value, checked) {
@@ -126,7 +212,7 @@
 		} else {
 			filter[field][value] ='';
 		}
-		console.log("C61 Filter:"+jsonPrint(filter));
+		if (debug) console.log("C211 Filter:"+jsonPrint(filter));
 	}
 	c.filterOut = function(filter, field, value, checked) {
 		if (typeof filter == 'undefined') filter = {};
@@ -136,13 +222,13 @@
 		} else {
 			filter[field][value] ='';
 		}
-		console.log("C82 Filter:"+jsonPrint(filter));
+		if (debug) console.log("C221 Filter:"+jsonPrint(filter));
 	}
 	
 	// kleiner unit Test
-	c.test = {};
-	c.filterIn(c.test, 'name', 'rene');
-	console.log("C88 filter Test:"+c.filterTest({'1':{'name':'Peter'}},c.test, true));
+	//c.test = {};
+	//c.filterIn(c.test, 'name', 'rene');
+	//console.log("C88 filter Test:"+c.filterTest({'1':{'name':'Peter'}},c.test, true));
 	
 
 	//if (typeof c.clientFilter == 'undefined') c.clientFilter = {};
@@ -159,37 +245,44 @@
 
 	// es gibt Items und relItem
 	// der Filter ist immer bei den Items
-	// input: list:situations fromId: situation.sys_id
+	// input: list:situations fromId: situation.sys_id, TODO: neu auch filtername zB topics als Parameter
 	c.show  = function(list, fromId) {
 		// TODO es gibt daten in q und in d Teilbäumen
 		//  if (meta.table.root) data = data[meta.table.root];
 		// wenn nichts gefiltert wird, alles anzeigen
-		console.log("C110 ist:"+list+" fromId:"+fromId);
+		console.log("C249 list:"+list+" fromId:"+fromId);
+		var root = c.getRoot(list);
 		//if (!c.data.filterOn) return true;
 		//console.log("C344 item:"+jsonPrint(item));
 		// situation topic Filter
 		// c.data.q.situations[situation.sys_id].sitToTop[topic.sys_id] existiert
+		// nur die Listen im filters json können gefiltert werden
+		// eigentlich möchte ich von aussen festlegen was alles gefilterd wird
 		var filters = {'situations':{'to':'topic','meta':'sitToTop'},
-									'challenges': {'to':'topic','meta':'chaToTop'}}
+									'challenges': {'to':'topic','meta':'chaToTop'},
+									'accounts': {'to':'topic','meta':'accAndTop'},
+									'contacts': {'to':'topic','meta':'conIntTop'}}
 		// list = situations, id = 123 filter[list].meta = sitToTop
 		// toid = jedes topic in der liste
 		// loop über alle filter
-		for (var key in filters) {
+		//for (var key in filters) {
+		  var key = list;
 			var filter = filters[key]
-			//console.log("C375 filter:"+jsonPrint(filter));
-			//console.log("C376 c.data.q[list]:"+jsonPrint(c.data.q[list][fromId]));
+			console.log("C267 list:"+list+" key:"+key+" root:"+root+" fromId:"+fromId+" filter:"+jsonPrint(filter));
+			//console.log("C268 c.data.q[list]:"+jsonPrint(c.data.q[list][fromId]));
 			// jedes topic im Filter durchgehen
 			for (var i in c.data.filter.topics) {
 				var toid =  c.data.filter.topics[i];
-				//console.log("C380 check:"+toid);
-				if (typeof c.data.q[list][fromId][filter.meta] != "undefined") {
-					//console.log("C382 beziehung existiert:"+filter.meta);					
-					if (typeof c.data.q[list][fromId][filter.meta][toid] != "undefined") {
+				if (debug) console.log("C272 check:"+toid);
+				if (typeof c.data[root][list][fromId][filter.meta] != "undefined") {
+					if (debug) console.log("C274 beziehung existiert:"+filter.meta);					
+					if (typeof c.data[root][list][fromId][filter.meta][toid] != "undefined") {
+						if (debug) console.log("C276  selected item:"+jsonPrint(c.data[root][list][fromId][filter.meta][toid]));					
 						return true;
 					}
 				}
 			}
-		}
+		//}
 		return false;
 	}
 	// alle namen der Filter in Liste um sie anzuzeigen
@@ -198,13 +291,13 @@
 	// das Item (topic) hat ein boolean Attribute selected
 	// die bede filterlisten werden jedesmal neu erstellt, das Problem ist c.filterIn
 	c.addFilterValues = function(name) {
-		console.log("C162 addFilterValue for name:"+name);
+		if (debug) console.log("C162 addFilterValue for name:"+name);
 		c.data.f.filterValues[name] = [];
 		c.data.f.filterIn[name] = {};
 		for (var sys_id in c.data.q[name+"s"]) {
 			var item = c.data.q[name+"s"][sys_id]; // zB ein Topic Item
 			if (item.selected) {
-				console.log("C167 addFilterValueitem:"+item.name+" added to list");
+				if (debug) console.log("C167 addFilterValueitem:"+item.name+" added to list");
 				c.data.f.filterValues[name].push(item.name);  // damit werden Zeilen wie Situationen gefiltert
 				c.filterIn(c.data.f.filterIn[name], 'sys_id', item.sys_id, true);
 			} 
@@ -219,7 +312,19 @@
 			c.filterIn(c.data.f.filterIn[name], 'sys_id', item.sys_id, false);
 		}
 	}
-	
+	// itemName zB accounts, contacts, situations, challenges in Mehrzahl
+	c.getRoot = function(itemName) {			
+		var root = 'q';
+		if (typeof c.data.m[itemName] != 'undefined') {
+			if (typeof c.data.m[itemName].table != 'undefined') {
+				if (typeof c.data.m[itemName].table.root != 'undefined') {
+					root = c.data.m[itemName].table.root;
+				}
+			}				
+		}
+		return root;
+	}
+
 	// zb name=topic
 	// wird aufgerufen um ein filter zu aktivieren zB topic (name) Filter anwenden
 	// alle items welche angezeigt werden sollen werden markiert
@@ -228,7 +333,9 @@
 	// ohne gleich all Kontakte zu laden
 	// wenn ich aber accHasSol in den grid nehmen, müssen alle accHasSol Daten geladen werden (oder eben nur die gerade im grid angezeigt werden )
 	// TODO ich will nicht immer alles filtern, was filterbar ist. zB account nach topic, aber topic nicht
+	// Parameter name : zB topics oder branches
 	c.setFilter = function(name) {
+		console.log("C334 setFilter für name:"+name);
 		//var inp = {};
 		//TODO Filter auch für die eigentlichen Daten in c.data umsetzen
 		//  if (meta.table.root) data = data[meta.table.root];
@@ -239,36 +346,41 @@
 		// braucht es nicht mehr, wird im Serverscript initiaisiert
 		if (typeof c.data.filter == 'undefined') { 
 			c.data.filter = {};
-			//c.data.filter[name+"s"] = [];
+			//c.data.filter[name] = [];
 		}
 		if (typeof c.data.included == 'undefined') c.data.included = {};
 		// ein Filter ist ein array der sys_ids der topics, sie markiert sind
-		c.data.filter[name+"s"] = [];
-		// loop über alle topics und alle mit checked rausnehmen
-		for (var key in c.data.q[name+"s"]) {
-			console.log("C244 filter für "+name+":"+key+" json:"+jsonPrint(c.data.q[name+"s"][key]));
-			var obj = c.data.q[name+"s"][key];
+		c.data.filter[name] = [];
+		// loop über alle topics oder branches und alle mit checked rausnehmen
+		// den eigentlichen Filter füllen
+		for (var key in c.data.q[name]) {
+			if (debug) console.log("C353 filter für "+name+":"+key+" json:"+jsonPrint(c.data.q[name+"s"][key]));
+			var obj = c.data.q[name][key];
 			if (obj.selected) {
-				c.data.filter[name+"s"].push(obj.sys_id);
+				c.data.filter[name].push(obj.sys_id);
 			}
 		}
-		// über alle q listen gehen und in den Metadaten jeder q liste schauen, ob der name als Filter existiert
+		// über alle listen gehen und in den Metadaten jeder liste schauen, ob der name als Filter existiert
 		// die datalist zeigt welche Objeke mit diesem Filter zB topic gefiltert werden können
 		for (var key in c.data.f.meta[name].datalist) {   // zb Situation
 			var itemName = c.data.f.meta[name].datalist[key];
-			console.log("filtern von:"+itemName);
-			//TODO mit q gehet nur q daten, aber nicht d daten wie accounts
-			for (var item in c.data.q[itemName+"s"]) {     // zb eine Situation
-				console.log("C255 item:"+jsonPrint(item, res));
-				if (c.show(itemName+"s", item)) {
-					c.data.q[itemName+"s"][item].included = true;
-					c.data.included[item] = c.data.q[itemName+"s"][item];  // merken um Flags wieder löschen zu können
+			var root = c.getRoot(itemName);
+			
+			console.log("C365 filtern von Liste:"+itemName);
+			//TODO mit q geht nur q daten, aber nicht d daten wie accounts
+			for (var item in c.data[root][itemName]) {     // zb eine Situation
+				if (debug) console.log("C368 item:"+jsonPrint(item, res));
+				if (c.show(itemName, item)) {
+					//TODO warum nicht einfach item.included = true?
+					c.data[root][itemName][item].included = true;
+					c.data.included[item] = c.data[root][itemName][item];  // merken um Flags wieder löschen zu können
+					if (debug) console.log("C372 item:"+jsonPrint(c.data[root][itemName][item]));
 				} else {
-					c.data.q[itemName+"s"][item].included = false;				
+					c.data[root][itemName][item].included = false;				
 				}
 			}
 		}
-		console.log("C264 included:"+jsonPrint(c.data.included, res));
+		if (debug) console.log("C360 included:"+jsonPrint(c.data.included, res));
 		//TODO die nicht account daten müssen auch zurück kommen, dazu müssen sie in ein Objekt verpackt werden
 		//inp.filter = filter;
 		//console.log("C236 inp.filter:"+jsonPrint(inp.filter));
@@ -368,23 +480,26 @@
 		return res;
 	}
 	// woher 
-	c.getCols = function(list, filter) {
+	// list liste von Objekten, zB solutions, situation, topics etc
+	// filter: c.data.f.filterIn[filtername]  filtername zB topic
+	// wenn die liste topics enthält und nach topic gefiltert wird, dann kann sys_id verglichen werden
+	c.getCols = function(list, filter, fromListName) {
 		var res = [];
 		var i = 1;
 		for(var key in list) {
 			var obj = list[key];
-			console.log("C344 i:"+i+" key:"+key+" obj:"+jsonPrint(obj));
+			if (debug) console.log("C456 i:"+i+" key:"+key+" obj:"+jsonPrint(obj));
 			var select = true;
 			if (typeof filter != "undefined") 
-				select = c.filterTest(obj, filter); 
+				select = c.filterTest(obj, filter, fromListName); 
 			if (select) {
-				console.log("C349 filter "+filter+" matched");
+				if (debug) console.log("C462 filter "+filter+" matched");
 				res.push(obj);
 				//if (i>= begin) res.push(obj);
 				//if ((i) >= end) return res;
 				//i = i+1;
 			} else {
-				console.log("C355 filter did not match"+jsonPrint(filter));
+				if (debug) console.log("C468 filter did not match"+jsonPrint(filter));
 			}
 		}
 		return res;
@@ -392,7 +507,7 @@
 	}
 	// erzeugt ein array mit sovielen Elementen wir es pages hat
 	c.getNumber = function(pages) {
-		console.log("C363 getNumbers um Button array anzuzeigen pgaes:"+pages)
+		console.log("C476 getNumbers um Button array anzuzeigen pgaes:"+pages)
 		return new Array(pages);
 	}
 	// setzt den index der aktuellen Seite und berechten start und endpunkt
@@ -402,7 +517,7 @@
 		c.data.grid.p = p;
 		c.data.grid.window_start = (p-1)*c.data.grid.size+1;
 		c.data.grid.window_end = c.data.grid.window_start+c.data.grid.size-1;
-		console.log("C372 setPageNum p:"+p+" start:"+c.data.grid.window_start+" end:"+c.data.grid.window_end);
+		console.log("C486 setPageNum p:"+p+" start:"+c.data.grid.window_start+" end:"+c.data.grid.window_end);
     c.nextGrid();
 	}	
 	c.mathMin = function(v1,v2) {
@@ -457,7 +572,10 @@
 		// TODO durch Filter lassen, achtung nicht nur topic
 		//TODO und nur wenn einer gesetzt ist
 		console.log("C420 getGrid toList:"+jsonPrint(toData[toList]));
-		c.data.grid.cols = c.getCols(toData[toList],c.data.f.filterIn['topic']);
+		
+		// Columns    den richtigen Filter übergeben, zB topic
+		c.data.grid.cols = c.getCols(toData[toList],c.data.f.filterIn['topic'], toList);
+		
 		console.log("C422 getGrid toList:"+toList+" toRel:"+toRel+" cols:"+jsonPrint(c.data.grid.cols, res));
 		//c.data.grid.relName = relName;
 		// matrix mit row.sys_id, col.sysId
@@ -489,12 +607,13 @@
 		var meta = data.m[relName];
 		for (var i in data.grid.list) {
 			var row = data.grid.list[i];
-			row.tooltip = c.getTooltip(row)+"ZZ";
-			console.log("C453:"+row.sys_id)
+			row.tooltip = c.getTooltip(row);
+			console.log("C577 row i="+i+":"+row.sys_id)
 			for (var j in data.grid.cols) {
 				//console.log("C455: col sys_id "+meta.to.asId+":"+j) 
 				var relItem = c.getRelItem(data, meta, relName, data.grid.fromList, row.sys_id, data.grid.toList , data.grid.cols[j].sys_id)
 				if (relItem) {
+					console.log("C582 fillGridData relItem:"+jsonPrint(relItem));
 					if (typeof data.grid[row.sys_id] == 'undefined') data.grid[row.sys_id] = {};
 					
 					data.grid[row.sys_id][data.grid.cols[j].sys_id] = relItem;
@@ -502,7 +621,7 @@
 					// a) wenn es keine value dafür gibt, dann ist checked true, wenn eine Beziehung existiert
 					if (meta.table.relField) {
 						// relItem[meta.table.relField] = value;
-						console.log("C464 nicht checked weil:"+meta.table.relField);
+						console.log("C589 nicht checked weil:"+meta.table.relField);
 					} else {
 						relItem.checked = true;
 					}
@@ -510,11 +629,13 @@
 					// es gibt noch keinen Fall, weil grid nur auf Template Daten geht
 					// damit ich checked in hit oder miss umwandeln kann
 					if (meta.table.relType.type == 'radio') {
-						console.log("C472 relType radio detected attribute is:"+meta.table.relType.att);
+						console.log("C4597 relType radio detected attribute is:"+meta.table.relType.att);
 						// das relItem müsste das Attribute mit dem Wert haben
 					}
 					var hit = meta.values['hit'];
-					console.log("C476:"+jsonPrint(data.grid[row.sys_id])); 					
+					console.log("C601:"+jsonPrint(data.grid[row.sys_id])); 					
+				} else {
+					console.log("C604 kein relItem gefunden");
 				}
 			}
 		}
@@ -557,11 +678,12 @@
 		} else if (params.field.name == 'relation') {
 			if (typeof c.data.grid == 'undefined') c.data.grid = {};
 			c.data.grid.relName = params.displayValue;
-			console.log("C519 relName:"+c.data.grid.relName);
+			if (debug) console.log("C519 relName:"+c.data.grid.relName);
 
 		} else {
 			console.log("C522 event:"+evt+" params:"+jsonPrint(params));
 		}
+		console.log("C683 ClientData:"+jsonPrint(c.data));
 	});
 
 	c.getRelItem = function (data, meta, relName, fromList, fromId, toList, toId) {
@@ -633,15 +755,17 @@
 		}
 		console.log("C593 c.data.relName:"+jsonPrint(meta,res));
 	}
-	// erzeugt ein neues temporäres RelObj, das direkt unter den Metadaten hängt.
+	// erzeugt ein neues leeres temporäres RelObj, das direkt unter den Metadaten hängt.
 	c.newObj = function(fromId, relName) {
 		var meta = c.data.m[relName];
+		console.log("C600 relName:"+relName+" meta:"+jsonPrint(meta,res));
 		meta['new'] = getEmptyRelItem(relName, fromId, null);
 	  meta.insertObj = true;
-		console.log("C600 c.data."+relName+":"+jsonPrint(meta,res));
 		return meta['new'];
 	}
-	
+	c.newObjAndSave = function (fromId, relName) {
+		c.saveNewObj(c.newObj(fromId, relName), relName);
+	}
 	// ein neues Objekt anlegen, zB einen neuen Kontakt und gleichzeitig das Beziehungsobjekt einfügen
 	// values welche im RefField zum neuen Objekt (to.field) haben, können dort gesetzt werden.
 	// kann auch update auf bestehenden Objekten machen
@@ -697,7 +821,7 @@
 	// das RelItem kann null sein
 	// es gibt Beziehungen im Account (das ist der Normalfall)
 	// es gibt Beziehungen bei den Stammdaten (das ist die andere Welt), funktioniert auch mit data.q
-  // TODO: bei neuen Beziehungen wir der Wert hit, checked value nicht übergeben
+  // TODO: bei neuen Beziehungen wird der Wert hit, checked value nicht übergeben
 	// wird vorallem im grid benötigt, wo es noch keine reltems gibt
 	// -------------------------------------
 	c.chgAccState = function(fromId, toId, relName, value) {
@@ -899,6 +1023,7 @@ div {
 			debug = true;
 			if (debug) console.log("45 setFilter:"+jsonPrint(input, res));
 			loadTemplateData(input.filter);
+			debug=false;
 
 		} else if (input.accountid) {
 			data.account = input.data.account;
@@ -949,8 +1074,8 @@ div {
 		if (typeof data.f == 'undefined') data.f = {};
 		if (typeof data.f.meta == 'undefined')data.f.meta = {};
 		// die datalist sagt, welche Objekte nach dem Kriterium gefiltert werden können
-		data.f.meta.topic = {'label':'Topic','name':'topic','list':'topics','datalist':['situation','challenge']};
-		data.f.meta.branche =  {'label':'Branche','name':'branche','list':'branches','datalist':['situation','challenge']};
+		data.f.meta.topics = {'label':'Topic','name':'topic','list':'topics','datalist':['situations','challenges', 'accounts', 'contacts']};
+		data.f.meta.branches =  {'label':'Branche','name':'branche','list':'branches','datalist':['situations','challenges']};
 
 		// filterValues sind filter für topics, Branchen, Rollen, etc
 		if (typeof data.f.filterValues == 'undefined') data.f.filterValues = {};
@@ -965,10 +1090,12 @@ div {
 		// Filter auf Inhalt, alles was zu einem Account gehört
 		if (typeof data.f.filter == 'undefined') data.f.filter = {};
 		//value sagt in welchem data.f.filterValue[] Objekt die Filterwerte stehen, zb account
-		data.f.filter.account = {'type':'and','name':'q1','field':'account.sys_id', 'op':'=', 'value':'account'};
-		data.f.filter.contact = {'type':'and','name':'q1','field':'contact.account.sys_id', 'op':'=', 'value':'account'};
-		data.f.filter.ctask = {'type':'and','name':'q1','field':'challenge_of_account.account.sys_id', 'op':'=', 'value':'account'};
-    console.log("101 filter:"+jsonPrint(data.f.filter['account']));
+		data.f.filter.accounts = {'type':'and','name':'q1','field':'account.sys_id', 'op':'=', 'value':'account'};
+		data.f.filter.contacts = {'type':'and','name':'q1','field':'contact.account.sys_id', 'op':'=', 'value':'account'};
+		data.f.filter.ctasks = {'type':'and','name':'q1','field':'challenge_of_account.account.sys_id', 'op':'=', 'value':'account'};
+		data.f.filter.stasks = {'type':'and','name':'q1','field':'solution_of_account.account.sys_id', 'op':'=', 'value':'account'};
+
+		console.log("101 filter:"+jsonPrint(data.f.filter['accounts']));
 
 	}
 
@@ -1001,11 +1128,12 @@ div {
 															 'visit_city': {'field':'visit_city', 'asField': 'visit_city'},
 															 'name':       {'field':'name',       'asField': 'name'}};
 		
+		debug = true;
 		getRelationOfObj(data, data.m.accHasCon);
 		debug = true;
 		if (debug) console.log("data.account:"+objectInspector(data.account, res));
 		console.log("118 accounts:"+objectInspector(data.d.accounts, res));
-
+		debug=false;
 
 		// -----------------------
 		console.log("104 load Contacts");
@@ -1017,9 +1145,9 @@ div {
 		console.log("111 neu AccoutHasSituations");
 		// -----------------------
 		data.m.accHasSit = {};
-		data.m.accHasSit.table = {'rel':'accHasSit',  'root':root ,'name':'x_poag_account_pot_account_has_situation',  'atts':'sys_id', 'filter':'account'};
+		data.m.accHasSit.table = {'relType':{'type':'radio', 'att':'hit', 'values':['yes','no']}, 'rel':'accHasSit',  'root':root ,'name':'x_poag_account_pot_account_has_situation',  'atts':'sys_id', 'filter':'account'};
 		data.m.accHasSit.from =  {'asId':'aid', 'refField':'account', 'field':'name', 'asField': 'account',  'list':'accounts'};
-		data.m.accHasSit.to =    {'asId':'siid','refField':'situation',      'field':'name', 'asField': 'situation'    };
+		data.m.accHasSit.to =    {'asId':'siid','refField':'situation',  'root':'q' ,    'field':'name', 'asField': 'situation'    };
 		data.m.accHasSit.values = {'hit': {      'field':'checked', 'asField': 'hit', 'getFunc':'hitFunction', 'setFunc':'checkedFunction'},
 														 'comment': {      'field':'comment', 'asField': 'comment'}};
 		debug = false;
@@ -1081,7 +1209,7 @@ div {
 		data.m.accHasCha = {};
 		data.m.accHasCha.table = {'rel':'accHasCha', 'root':root ,'name':'x_poag_account_pot_accounthaschallenge',  'atts':'sys_id, checked', 'filter':'account'};
 		data.m.accHasCha.from =  {'asId':'aid','refField':'account',   'field':'name', 'asField': 'account',   'list':'accounts'};
-		data.m.accHasCha.to =    {'asId':'cid','refField':'challenge',  'field':'name','asField': 'challenge'};
+		data.m.accHasCha.to =    {'asId':'cid','refField':'challenge', 'root':'q' , 'field':'name','asField': 'challenge'};
 		data.m.accHasCha.values = {'hit':       {'field':'checked',   'asField': 'hit', 'getFunc':'hitFunction', 'setFunc':'checkedFunction'}};
 		getRelationOfObj(data, data.m.accHasCha);
 		if (debug) console.log("data.account:"+objectInspector(data.account, res));
@@ -1148,7 +1276,7 @@ div {
 														};
 		debug = false;
 		getRelationOfObj(data, data.m.accHasCta);
-		debug = false;
+		debug = true;
 		if (debug) console.log("data.account:"+jsonPrint(data.account, res));
 		debug = false;
 
@@ -1163,17 +1291,17 @@ div {
 		// die id des accounts hole ich aus dem value feld accounts (dh es muss es geben)
 		data.m.accHasSta = {};
 		data.m.accHasSta.table =  {'rel':'accHasSta','root':root , 'name':'x_poag_account_pot_account_solution_task', 'atts':'sys_id', 'filter':'stask'};
-		data.m.accHasSta.from =   {'refField':'challenge_of_account.challenge', 'field':'name',  'asField': 'challenge',   'asId':'caid' ,'list':'accounts.accHasCha'};
+		data.m.accHasSta.from =   {'refField':'solution_of_account.solution', 'field':'name',  'asField': 'solution',   'asId':'soid' ,'list':'accounts.accHasSol'};
 		data.m.accHasSta.to =     {                                  'field':'short_description',    'asField': 'task',        'asId':'taid' };
 		data.m.accHasSta.values = {'checked':    {'field':'checked',     'asField': 'checked',   'getFunc':'boolFunction',  'setFunc':'boolFunction'},
 														 'accounts':    {'refField':'solution_of_account.account', 'field':'name',  'asField': 'account', 'asId':'aid'},
-														 'challengeOfAccount': {'refField':'solution_of_account', 'field':'solution',  'asField': 'solutionOfAccount',   'asId':'asid'},
+														 'solutionOfAccount': {'refField':'solution_of_account', 'field':'solution',  'asField': 'solutionOfAccount',   'asId':'asid'},
 														 'description':{'field':'description', 'asField': 'description'}
 														};
-		debug = false;
+		debug = true;
 		getRelationOfObj(data, data.m.accHasSta);
-		debug = false;
-		if (debug) console.log("data.account:"+jsonPrint(data.account, res));
+		debug = true;
+		if (debug) console.log("solution Tasks data.account:"+jsonPrint(data.account, res));
 		debug = false;
 
 		
@@ -1184,7 +1312,7 @@ div {
 		data.m.accHasRol = {};
 		data.m.accHasRol.table = {'rel':'accHasRol', 'root':root ,'name':'x_poag_account_pot_contact_has_role_in_account', 'atts':'sys_id', 'filter':'contact'};
 		data.m.accHasRol.from =  {'asId':'aid', 'refField':'contact.account', 'field':'name',  'asField': 'account', 'list':'accounts'};
-		data.m.accHasRol.to =    {'asId':'roid','refField':'role',    'field':'name',   'asField':'role'};
+		data.m.accHasRol.to =    {'asId':'roid','refField':'role',  'root':'q' ,  'field':'name',   'asField':'role'};
 		data.m.accHasRol.values = {'contact':       {'asId':'coid' ,'refField':'contact', 'field':'name',   'asField': 'contact'}};
 		getRelationOfObj(data, data.m.accHasRol);
 debug = true;
@@ -1196,7 +1324,7 @@ debug = true;
 		data.m.conHasRol = {};
 		data.m.conHasRol.table = {'rel':'conHasRol','root':root , 'name':'x_poag_account_pot_contact_has_role_in_account', 'atts':'sys_id', 'filter':'contact'};
 		data.m.conHasRol.from =  {'asId':'coid','refField':'contact','field':'name', 'asField': 'contact', 'list':'contacts'};
-		data.m.conHasRol.to =    {'asId':'roid','refField':'role', 'field':'name',   'asField': 'role'};
+		data.m.conHasRol.to =    {'asId':'roid','refField':'role', 'root':'q' ,'field':'name',   'asField': 'role'};
 		data.m.conHasRol.values = {'account':       {'asId':'aid' ,'refField':'contact.account', 'field':'name',   'asField': 'account'}};
 		getRelationOfObj(data, data.m.conHasRol);
 		if (debug) console.log("283 data.account.contacts:"+objectInspector(data.contacts, res));
@@ -1214,8 +1342,9 @@ debug=false;
 		data.m.conHasCha = {};
 		data.m.conHasCha.table = {'rel':'conHasCha','root':root , 'name':'x_poag_account_pot_contact_has_challenge', 'atts':'sys_id', 'filter':'contact'};
 		data.m.conHasCha.from =  {'asId':'coid','refField':'contact',   'field':'name',   'asField':'contact', 'list':'contacts'};
-		data.m.conHasCha.to =    {'asId':'caid','refField':'challenge', 'field':'name',   'asField':'challenge'};
-		data.m.conHasCha.values = {'hit':       {'field':'checked',     'asField':'hit', 'getFunc':'hitFunction', 'setFunc':'checkedFunction'}};
+		data.m.conHasCha.to =    {'asId':'caid','refField':'challenge', 'root':'q' ,'field':'name',   'asField':'challenge'};
+		data.m.conHasCha.values = {'hit':       {'field':'checked',     'asField':'hit', 'getFunc':'hitFunction', 'setFunc':'checkedFunction'},
+															'comment':       {'field':'comment',   'asField': 'comment'}};
 		debug = false;
 		getRelationOfObj(data, data.m.conHasCha);
 		debug = false;
@@ -1228,6 +1357,7 @@ debug=false;
 		if (debug) console.log("data.roles:"+objectInspector(data.roles, res));
 		debug = true;
 		if (debug) console.log("262 data:"+jsonPrint(data, res));
+		debug=false;
 	}	
 	
 	
@@ -1237,12 +1367,12 @@ debug=false;
 			data.m = {};
 			console.log("246 data.m gelöscht");
 		}
-		data.m.account = {};
-		data.m.account.table = {'name':'x_poag_account_pot_account', 'root':'d', 'atts':'name, sys_id, description'};
-		data.m.contact = {};
-		data.m.contact.table = {'name':'x_poag_account_pot_contact', 'root':'d', 'atts':'name, sys_id, description, network, account.name, function, xing_url, linkedin_url'};
-		data.m.situation = {};
-		data.m.situation.table = {'name':'x_poag_account_pot_situation', 'root':'q', 'atts':'name, sys_id, description'};
+		data.m.accounts = {};
+		data.m.accounts.table = {'name':'x_poag_account_pot_account', 'root':'d', 'atts':'name, sys_id, description'};
+		data.m.contacts = {};
+		data.m.contacts.table = {'name':'x_poag_account_pot_contact', 'root':'d', 'atts':'name, sys_id, description, network, account.name, function, xing_url, linkedin_url'};
+		data.m.situations = {};
+		data.m.situations.table = {'name':'x_poag_account_pot_situation', 'root':'q', 'atts':'name, sys_id, description'};
 		data.q = {};
 		data.q.situations  = getObjs('x_poag_account_pot_situation', 'name, sys_id, description', null);
 		data.q.challenges  = getObjs('x_poag_account_pot_challenge', 'name, sys_id, description', null);
@@ -1448,7 +1578,7 @@ debug=false;
 			item.show = true;
 			item.changed = false;
 			item.sys_id = rec.getDisplayValue('sys_id');
-			console.log("514 object:"+meta.table.rel+" found:"+jsonPrint(item));
+			if (debug) console.log("514 object:"+meta.table.rel+" found:"+jsonPrint(item));
 			//results[item.sys_id] = item;
 			results[item.sys_id] = getRelItem(rec, item, meta, $sp);
 		}
@@ -1499,9 +1629,9 @@ debug=false;
 		//var qc2 = rec.addQuery('impact', '2'); 
 		//qc2.addOrCondition('impact', '3'); 
 		if (filters) {
+			
+			var debugglobal = debug;
 			debug = true;
-			//var debugglobal = debug;
-			//debug = true;
 			var queries = {};
 			for (var filterName in filters) {   // zB topic
 				var filter = filters[filterName];  // {'type':'and','name':'q1','field':'topic', 'op':'EQ', 'value':'Healthcare'},{}
@@ -1521,7 +1651,7 @@ debug=false;
 				}
 			}
 		}
-		//debug = debugglobal;
+		debug = debugglobal;
 		return rec;
 	}
 	
@@ -1570,7 +1700,7 @@ function updateObj(relItem, meta) {
 	}
 	// wenn nicht der Value ändert, sondern die Beziehung . zb conHasRol neue cid
 	// wenn das refField einen Punkt hat, ist die id nicht änderbar, dann ist es die Beziehung einer Beziehung
-	console.log("437 indexOf:"+meta.from.refField.indexOf("."));
+	if (debug) console.log("437 indexOf:"+meta.from.refField.indexOf("."));
 	if (meta.from.refField.indexOf(".") ==-1) {
 		rec.setValue(meta.from.refField,relItem[meta.from.asId]); 
 		if (debug) console.log("440 "+meta.from.refField+"="+relItem[meta.from.asId]); 
@@ -1676,9 +1806,9 @@ function getRelationOfObj(data, meta) {
 	// Achtung filter holen, der Zugriff aud das data.f ist nachher weg
 	var filter = null;
 	if (meta.table.filter) {
-		console.log("695 look for filter:"+meta.table.filter);
-		console.log("695 data.f:"+jsonPrint(data.f));
-		console.log("695 filter is:"+jsonPrint(data.f.filter[meta.table.filter]));
+		if (debug) console.log("695 look for filter:"+meta.table.filter);
+		if (debug) console.log("695 data.f:"+jsonPrint(data.f));
+		if (debug) console.log("695 filter is:"+jsonPrint(data.f.filter[meta.table.filter]));
 		if (meta.table.filter) {
 			filter = data.f.filter[meta.table.filter];
 			filterValues = data.f.filterValues;
@@ -1695,20 +1825,22 @@ function getRelationOfObj(data, meta) {
 		var listNames = meta.from.list.split(".");	//besteht aus (mindestens) zwei Elementen)
 		leftName = listNames[0];										// für das erste muss ich die id haben
 		rightName = listNames[1];
-		console.log("554 from,list mit punkt gefunden:"+meta.from.list+" leftName:"+leftName+" rightName:"+rightName);
+		if (debug) console.log("554 from,list mit punkt gefunden:"+meta.from.list+" leftName:"+leftName+" rightName:"+rightName);
 
 		if (typeof meta.values[leftName] == 'undefined') {
-			console.log("557 Error, es fehlt ein Meta Objekt values mit für das Feld "+leftName);   /// account bei account.accHasCha
+			if (debug) console.log("557 Error, es fehlt ein Meta Objekt values mit für das Feld "+leftName);   /// account bei account.accHasCha
 		} 
 	}
 	var fromList = null;
 	// Wenn es die Liste nicht gibt, wir eine leere erzeugt
   if (typeof data[leftName] == 'undefined') {
 		data[leftName] = {};
-		if (debug) console.log("564 Neue Liste data."+leftName+" erzeugt"); 
+		if (debug) console.log("853 !!!!!!!!!!! Neue Liste data."+leftName+" erzeugt"); 
 	}
+	if (debug) console.log("855 leftName."+leftName+" leftname solle in data sein:"+jsonPrint(data)); 
+
 	fromList = data[leftName];     // zB data.account
-	var fromListMaster = fromList; //sichern für zweistufige fromlist, damit ich aud den ersten Teil noch Zugriff habe, zB account
+	var fromListMaster = fromList; //sichern für zweistufige fromlist, damit ich auf den ersten Teil noch Zugriff habe, zB account
 	
 	// wenn es eine zweite liste gibt
 	var leftFromIdName = null;
@@ -1725,11 +1857,12 @@ function getRelationOfObj(data, meta) {
 	// die Filter sind in data.f.filter[filtername] definiert
 	if (filter) {
 			rec.addQuery(filter.field, filter.op, filterValues[filter.value]);   // alle Beziehungen contact zu role
-			console.log("679 Query:"+filter.field+" ,"+filterValues[filter.value]);
+			if (debug) console.log("679 Query:"+filter.field+" ,"+filterValues[filter.value]);
 	}
 	rec.query();
   
   while (rec.next()) {
+		if (debug) console.log("884 next rec");
 		if (!$sp.canReadRecord(rec))
             continue;
 		var relItem = {};
@@ -1752,32 +1885,37 @@ function getRelationOfObj(data, meta) {
 			// Wenn ein Value eine Referenz ist, kann die id auch geholt werden
 			if (value.asId) relItem[value.asId] = rec.getDisplayValue(value.refField+".sys_id");
 		}
-		if (debug) console.log("706 "+meta.from.field+":"+objectInspector(relItem, res));		
-    var fromId = relItem[meta.from.asId];          // id des from Objektes holen  // im fall von account.challenge ist das der caid (als die zweite id)
+		if (debug) console.log("900 "+meta.from.field+":"+objectInspector(relItem, res));		
+    var fromId = relItem[meta.from.asId];          // id des from Objektes holen  // im fall von account.challenge ist das der caid (also die zweite id)
 		if (leftFromIdName) {
-			if (debug) console.log("709 leftFromIdName gesetzt: "+leftFromIdName+" setze FromList auf:"+relItem[leftFromIdName]+" rightName:"+rightName);
+			console.log("911 leftFromIdName gesetzt: "+leftFromIdName+" setze FromList auf:"+relItem[leftFromIdName]+" rightName:"+rightName);
 			leftFromId = relItem[leftFromIdName];
 			// fromListeMaster: data.account  leftFromId: accountId  rightName: accHasCha
 			fromList = fromListMaster[leftFromId][rightName];			
 		}
 
-		if (debug) console.log("715 fromId = relItem["+meta.from.asId+"]:"+fromId);
+		console.log("917 fromId = relItem["+meta.from.asId+"]:"+fromId);
 		var fromItem = fromList[fromId];
 		// falls es das fromItem in der Fromlist nicht gibt, wird eines erzeugt, so kann eine from.list vollständig aus der m2m Tabelle erzeugt werden
 		//TODO geht im moment nur für listen ohne punkt (also nicht account.accHasCha)
 		if (!fromItem) {
 			fromItem = {};
-			fromItem['sys_id'] = fromId;
-			fromList[fromId] = fromItem;
-			console.log("723 data."+meta.from.list+"["+meta.from.asId+"] erzeugt"+jsonPrint(fromList[fromId], res));
+			if (fromId != "") {
+				fromItem['sys_id'] = fromId;
+				fromItem[meta.from.asId] = fromId;
+				fromList[fromId] = fromItem;
+				console.log("926 data."+meta.from.list+"["+meta.from.asId+"] erzeugt"+jsonPrint(fromList[fromId], res));
+			} else {
+				console.log("928 keine fromId relItem:"+jsonPrint(relItem)+" hat keine fromId");
+			}
 		}
-		if (debug) console.log("725 data."+meta.from.list+"["+meta.from.asId+"]:"+objectInspector(fromItem, res));
+		if (debug) console.log("932 data."+meta.from.list+"["+meta.from.asId+"]:"+objectInspector(fromItem, res));
 		
 		// wenn es keine Liste von Rel Objekten gibt, muss ein leeres Objekt erzeugt werden
 		// wenn das erste relItem unter ein item gehängt wird.
 		if (typeof fromItem[meta.table.rel] == 'undefined') {
 			fromItem[meta.table.rel] = {};
-			if (debug) console.log("793 es gibt keine Liste, list:"+meta.table.rel+" wird eingefügt für das relItem+"+jsonPrint(relItem));
+			if (debug) console.log("938 es gibt keine Liste, list:"+meta.table.rel+" wird eingefügt für das relItem+"+jsonPrint(relItem));
 		}
     //TODO Achtung bei Contacts oder ChallengeTasks gibt es kein to.refField ist keine m2m Tabelle
 		//bei account.assHasCha ist das die caid
@@ -1888,9 +2026,9 @@ function getAccounts(keywords) {
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-10-04 09:30:26</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>7fc988414f5a62002ed2bc511310c7c1</sys_id>
-        <sys_mod_count>2026</sys_mod_count>
+        <sys_mod_count>2196</sys_mod_count>
         <sys_name>Account Potential Analyse</sys_name>
         <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
         <sys_policy/>
@@ -1898,11 +2036,17 @@ function getAccounts(keywords) {
         <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
         <sys_update_name>sp_widget_7fc988414f5a62002ed2bc511310c7c1</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-02-06 17:30:11</sys_updated_on>
-        <template><![CDATA[	<script type='text/ng-template' id="item">
+        <sys_updated_on>2017-03-10 18:24:58</sys_updated_on>
+        <template><![CDATA[<script type='text/ng-template' id="newButton">
+  <div class="row">
+     {{title}} <button class="fa fa-plus" ng-click="saveobj({fromId:fromid, relName:relname})"></button>
+	</div> 
+</script>
+
+<script type='text/ng-template' id="item">
   <div class="row">
      <!-- filteron:{{filteron}}, relname:{{relname}}, item.included:{{item.included}}, item.name:{{item.name}}, item.contact:{{item.contact}}, {{item[toidname]}}, {{accountid}}, {{account[relname][item.sys_id].hit}} -->
-     <div class="col-sm-{{col1}} col-md-{{col1}} col-lg-{{col1}}" ng-if="item.included || !filteron">
+     <div class="col-sm-{{col1}} col-md-{{col1}} col-lg-{{col1}}" >
         <span ng-if="openclose">
               <button ng-if="item.show"   class="fa fa-caret-square-o-down"  ng-click="item.show=!item.show" ></button>
               <button ng-if="!item.show"  class="fa fa-caret-square-o-right" ng-click="item.show=!item.show" ></button>
@@ -1929,7 +2073,7 @@ function getAccounts(keywords) {
         <span ng-if="reltype=='checked'" class="checkbox">
            <label for="{{item[toidname]}}">
            <input type="checkbox" ng-model="fromobj[relname][item[toidname]].checked" name="group" id="{{item[toidname]}}" 
-                           ng-change="saveobj(relItem:item, {{relname}})" />{{item[descriptionfield]}} </label>
+                           ng-change="saveobj({relItem:item, relName:relname})" />{{item[descriptionfield]}} </label>
 
         </span>
         <span ng-if="namefield == null"></span>
@@ -1939,7 +2083,7 @@ function getAccounts(keywords) {
        <span ng-if="descriptionfield == null"></span>
        <span ng-if="descriptionfield != null">{{item[descriptionfield]}}</span>
        <span ng-if="comment">
-         <input class="form-control"  placeholder="comment" ng-model="account[relname][item[toidname]].comment"
+         <input class="form-control"  placeholder="comment" ng-model="fromobj[relname][item[toidname]].comment"
                   ng-change="fromobj[relname][item[toidname]].changed=true" />
          <button class="fa fa-check" ng-click="saveobj({relItem:fromobj[relname][item[toidname]], relName:relname}); fromobj[relname][item[toidname]].changed=false;"
                   ng-if="fromobj[relname][item[toidname]].changed"></button>
@@ -2065,7 +2209,7 @@ function getAccounts(keywords) {
             </div>
           </li>
           <li><div class="checkbox m-l"><label><input type="checkbox" ng-model="c.data.show.accounts"/>${Accounts}</label></div></li>
-          <li><div class="checkbox m-l"><label><input type="checkbox" ng-model="c.data.show.stakeholder"/>${Stakeholder}</label></div></li>
+          <li><div class="checkbox m-l"><label><input type="checkbox" ng-model="c.data.show.contacts"/>${Contacts}</label></div></li>
           <li><div class="checkbox m-l"><label><input type="checkbox" ng-model="c.data.show.situations"/>${Situations}</label></div></li>
           <li><div class="checkbox m-l"><label><input type="checkbox" ng-model="c.data.show.challenges"/>${Challenges}</label></div></li>
           <li><div class="checkbox m-l"><label><input type="checkbox" ng-model="c.data.show.solutions"/>${Solutions}</label></div></li>
@@ -2098,12 +2242,12 @@ function getAccounts(keywords) {
       <label class="group">${Filter}</label>
     	<span class="check">
       <label>
-        <input type="checkbox" ng-model="c.data.filterTopicOn" ng-change="c.setFilter('topic')" />${Topic}
-        <input type="checkbox" ng-model="c.data.filterBrancheOn" ng-change="c.setFilter('branche')" />${Branche}
-        <input type="checkbox" ng-model="c.data.filterRoleOn" ng-change="c.setFilter('role')" />${Role}
-        <input type="checkbox" ng-model="c.data.filterAccountOn" ng-change="c.setFilter('account')" />${Account}
+        <input type="checkbox" ng-model="c.data.filterTopicOn" ng-change="c.setFilter('topics')" />${Topic}
+        <input type="checkbox" ng-model="c.data.filterBrancheOn" ng-change="c.setFilter('branches')" />${Branche}
+        <input type="checkbox" ng-model="c.data.filterRoleOn" ng-change="c.setFilter('roles')" />${Role}
+        <input type="checkbox" ng-model="c.data.filterAccountOn" ng-change="c.setFilter('accounts')" />${Account}
       </label>
-	  <button  class="fa fa-refresh" title="refresh using filter settings"ng-click="c.setFilter('topic')" ></button>
+	  <button  class="fa fa-refresh" title="refresh using filter settings"ng-click="c.setFilter('topics')" ></button>
     </span>
     </div>
        
@@ -2195,24 +2339,105 @@ function getAccounts(keywords) {
 </section>
   	<!---* Accounts -->
   <div ng-if="c.data.show.accounts">
-  	<item-editor art="itemlist" items="c.data.d.accounts" filteron=c.data.filterOn
-              openclose=true 
-              debug=false
-              reltype=hit
-              accountid="c.data.account.sys_id" relname="accAndTop"
-              account="c.data.d.accounts[c.data.account.sys_id]"
-              chg="c.chgAccState(fromId, toId, relName)"
-              saveobj="c.saveNewObj(relItem, relName)"
-              comment=true
-              log="c.log(fromId, toId, relName)">
-   </item-editor>
+    <div class="container-fluid" ng-repeat="account in c.data.d.accounts">
+      <div class="panel panel-default" ng-if="account.name != undefined">
+        <div class="panel-heading" ng-if="(account.included || !c.data.filterOn)">
+          <item-editor art="item" item="account" filteron=c.data.filterOn
+                    openclose=true namefield="name" descriptionfield="description"
+                    account="c.data.d.accounts[account.sys_id]"
+                    fromid="c.data.d.accounts[account.sys_id]"
+                    comment=false col1=0 col2=12
+                    log="c.log(fromId, toId, relName)">
+        	</item-editor>
+        </div> <!-- panel heading -->
+        <div class="panel-body" ng-repeat="contact_r in account.accHasCon" ng-if="c.data.show.contacts && account.show">
+
+          <div  ng-if="c.data.d.contacts[contact_r.coid].included || !c.data.filterOn"> <!-- Contact -->
+            <item-editor art="item" item="c.data.d.contacts[contact_r.coid]" reltype="state" filteron=c.data.filterOn
+                         openclose=true namefield="name" descriptionfield="network"
+                         accountid="c.data.account.sys_id" 
+                         fromid="c.data.account.sys_id"
+                         relname="accHasCon"
+                         states= ""
+                         toidname="coid"
+                         account="c.data.d.accounts[account.sys_id]"
+                         fromobj="c.data.d.accounts[account.sys_id]"
+                         chg="c.chgAccState(fromId, toId, relName)"
+                         saveobj="c.saveNewObj(relItem, relName)"
+                         comment=false col1=3 col2=9
+                         log="c.log(fromId, toId, relName)">
+            </item-editor>
+          </div> <!-- div -->
+          <div > <!-- Challenge -->
+            <div class="row" ng-repeat="challenge_r in c.data.d.contacts[contact_r.coid].conHasCha">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <item-editor art="item" item="challenge_r" reltype="hit" filteron=c.data.filterOn
+                             openclose=false namefield="challenge" 
+                             accountid="c.data.account.sys_id" 
+                             fromid="contact_r.coid"
+                             relname="conHasCha"
+                             toidname="caid"
+                             account="c.data.d.accounts[c.data.account.sys_id]"
+                             fromobj="c.data.d.contacts[contact_r.coid]"
+                             chg="c.chgAccState(fromId, toId, relName)"
+                             saveobj="c.saveNewObj(relItem, relName)"
+                             comment=true col1=4 col2=8
+                             log="c.log(fromId, toId, relName)">
+                </item-editor>
+              </div> <!-- col -->
+            </div> <!-- row -->                     
+          </div> <!--  Panel Challenge -->
+        </div> <!-- panel -->
+	    </div>
+    </div>    
   </div> 
 
   <!---* Stakeholder Fragekatalog -->
-  <!-- TODO Rolle, Netzwerk und Comment einbauen
-  <div ng-if="c.data.show.stakeholder">
+  <!-- TODO Rolle, Netzwerk und Comment einbauen -->
 
-  </div> --> 
+	<!---* All starting with Contacts -->
+    <div ng-repeat="contact_r in c.data.d.accounts[c.data.account.sys_id].accHasCon" ng-if="c.data.show.contacts">
+      <div class="container-fluid" ng-if="c.data.d.contacts[contact_r.coid].included || !c.data.filterOn">
+        <div class="panel panel-default">
+          <div class="panel-heading"> <!-- Contact -->
+            <item-editor art="item" item="c.data.d.contacts[contact_r.coid]" reltype="state" filteron=c.data.filterOn
+                         openclose=true namefield="name" descriptionfield="network"
+                         accountid="c.data.account.sys_id" 
+                         fromid="c.data.account.sys_id"
+                         relname="accHasCon"
+                         states= ""
+                         toidname="coid"
+                         account="c.data.d.accounts[c.data.account.sys_id]"
+                         fromobj="c.data.d.accounts[c.data.account.sys_id]"
+                         chg="c.chgAccState(fromId, toId, relName)"
+                         saveobj="c.saveNewObj(relItem, relName)"
+                         comment=false col1=3 col2=9
+                         log="c.log(fromId, toId, relName)">
+            </item-editor>
+          </div> <!-- panel-heading -->
+          <div class="panel-body"> <!-- Task -->
+            <div class="row" ng-repeat="challenge_r in c.data.d.contacts[contact_r.coid].conHasCha">
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <item-editor art="item" item="challenge_r" reltype="hit" filteron=c.data.filterOn
+                             openclose=false namefield="challenge" 
+                             accountid="c.data.account.sys_id" 
+                             fromid="contact_r.coid"
+                             relname="conHasCha"
+                             toidname="caid"
+                             account="c.data.d.accounts[c.data.account.sys_id]"
+                             fromobj="c.data.d.contacts[contact_r.coid]"
+                             chg="c.chgAccState(fromId, toId, relName)"
+                             saveobj="c.saveNewObj(relItem, relName)"
+                             comment=true col1=4 col2=8
+                             log="c.log(fromId, toId, relName)">
+                </item-editor>
+              </div> <!-- col -->
+            </div> <!-- row -->                     
+          </div> <!--  Panel Task -->
+        </div> <!-- panel -->
+      </div> <!-- container -->
+    </div>  <!-- contacts -->
+ 
 	<!--  Situations Fragekatalog -->
   <div ng-if="c.data.show.situations">
   	<item-editor art="itemlist" items="c.data.q.situations" filteron=c.data.filterOn
@@ -2246,7 +2471,7 @@ function getAccounts(keywords) {
       <div class="panel panel-default">
         <div class="panel-heading"> <!-- Solution -->
           <item-editor art="item" item="solution" reltype="state" filteron=c.data.filterOn
-                       openclose=ture namefield="solution" descriptionfield="description"
+                       openclose=true namefield="solution" descriptionfield="description"
                        accountid="c.data.account.sys_id" 
                        fromid="c.data.account.sys_id"
                        relname="accHasSol"
@@ -2260,8 +2485,8 @@ function getAccounts(keywords) {
                        log="c.log(fromId, toId, relName)">
           </item-editor>
         </div> <!-- panel-heading -->
-        <div class="panel panel-default"> <!-- Task -->
-          <div class="row" ng-repeat="taskRel in c.data.accounts[c.data.account.sys_id].accHasSol[solution.soid].accHasSta">
+        <div class="panel-body"> <!-- Task -->
+          <div class="row" ng-repeat="taskRel in solution.accHasSta">
             <div class="col-sm-12 col-md-12 col-lg-12">
               <item-editor art="item" item="taskRel" reltype="checked" filteron=c.data.filterOn
                            openclose=false namefield="short_description" descriptionfield="description"
@@ -2270,7 +2495,7 @@ function getAccounts(keywords) {
                            relname="accHasSta"
                            toidname="taid"
                            account="c.data.d.accounts[c.data.account.sys_id]"
-                           fromobj="c.data.d.accounts[c.data.account.sys_id].accHasSol[solution.soid]"
+                           fromobj="solution"
                            chg="c.chgAccState(fromId, toId, relName)"
                            saveobj="c.saveNewObj(relItem, relName)"
                            comment=false col1=3 col2=9
@@ -2279,7 +2504,6 @@ function getAccounts(keywords) {
             </div> <!-- col -->
           </div> <!-- row -->                     
         </div> <!--  Panel Task -->
-
       </div> <!-- panel -->
     </div> <!-- container -->
   </div>  <!-- solution -->
@@ -2314,6 +2538,10 @@ function getAccounts(keywords) {
         <!---* Challenges -->
         <div class="panel-group">
           <div class="panel-body" ng-if="c.data.d.accounts[c.data.account.sys_id].accHasSit[situation.sys_id].hit=='hit' && situation.show"> <!-- Challenge -->
+            <div class="row"><div class="col-sm-3 col-md-3 col-lg-3"><div class="col-sm-9 col-md-9 col-lg-9">
+              <item-editor art="newButton" title="New Challenge" item="situation", relname="sitToCha", saveobj="c.newObjAndSave(fromId, relName)" fromid="situation.sys_id">
+              </item-editor>         
+              </div></div></div>            
             <div class="row">
               <div class="col-sm-1 col-md-1 col-lg-1"></div>
               <div class="col-sm-11 col-md-11 col-lg-11">

@@ -51,7 +51,7 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>rene.schwarb@ipt.ch</sys_created_by>
         <sys_created_on>2016-11-19 16:07:04</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>2b1d163f4fc7660089fddf601310c73e</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Comment</sys_name>

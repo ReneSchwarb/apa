@@ -3,20 +3,25 @@
     <element label="Solution" max_length="40" name="x_poag_account_pot_solution" type="collection">
         <element label="Category" max_length="32" name="category" reference="x_poag_account_pot_solution_category" type="reference"/>
         <element label="Description" max_length="1000" name="description" type="string"/>
+        <element label="Homepage" max_length="1024" name="homepage" type="url"/>
         <element label="isOffering" max_length="40" name="isoffering" type="boolean"/>
         <element choice="1" label="Kind" max_length="40" name="kind" type="choice">
             <choice>
                 <element label="ipt Offering" sequence="0" value="ipt Offering"/>
                 <element label="Partner Offering" sequence="1" value="Partner Offering"/>
                 <element label="Competition" sequence="2" value="Competition"/>
+                <element label="independent" sequence="3" value="independent"/>
             </choice>
         </element>
-        <element label="Name" max_length="100" name="name" type="string"/>
+        <element display="true" label="Name" max_length="100" name="name" type="string"/>
         <element choice="1" label="Type" max_length="40" name="type" type="choice">
             <choice>
                 <element label="Product" sequence="0" value="Product"/>
                 <element label="Service" sequence="1" value="Service"/>
                 <element hint="EIn Person mit entsprechenden Skills" label="Resource" sequence="2" value="Resource"/>
+                <element label="Product Category" sequence="3" value="Product Category"/>
+                <element label="Technology" sequence="4" value="Technology"/>
+                <element label="Method" sequence="5" value="Method"/>
             </choice>
         </element>
         <index name="index">

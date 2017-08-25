@@ -51,7 +51,7 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-11-14 19:06:58</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>7a86111a4f03260089fddf601310c7b7</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>From List</sys_name>

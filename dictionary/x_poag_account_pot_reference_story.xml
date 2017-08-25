@@ -3,6 +3,18 @@
     <element label="Reference Story" max_length="40" name="x_poag_account_pot_reference_story" type="collection">
         <element label="Description" max_length="1000" name="description" type="string"/>
         <element display="true" label="Name" max_length="100" name="name" type="string"/>
+        <element choice="1" label="Type" max_length="40" name="type" type="choice">
+            <choice>
+                <element label="Blog" sequence="0" value="Blog"/>
+                <element label="Success Story" sequence="1" value="Success Story"/>
+                <element label="Whitepaper" sequence="2" value="Whitepaper"/>
+                <element label="Dossier" sequence="3" value="Dossier"/>
+                <element label="Presseartikel" sequence="4" value="Presseartikel"/>
+                <element label="Slidedeck" sequence="5" value="Slidedeck"/>
+                <element label="Zeichnung" sequence="6" value="Zeichnung"/>
+                <element label="interne Publikation" sequence="7" value="interne Publikation"/>
+            </choice>
+        </element>
         <element label="URL" max_length="1024" name="url" type="url"/>
     </element>
 </database>

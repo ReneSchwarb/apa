@@ -10,6 +10,7 @@
                 <element label="lead" sequence="2" value="lead"/>
                 <element label="customer" sequence="3" value="customer"/>
                 <element label="reference" sequence="4" value="reference"/>
+                <element label="provides" sequence="5" value="provides"/>
             </choice>
         </element>
         <element display="true" label="Topic" max_length="32" name="topic" reference="x_poag_account_pot_topic" type="reference"/>

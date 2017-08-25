@@ -3,12 +3,16 @@
     <element label="Account and Solution" max_length="40" name="x_poag_account_pot_account_and_solution" type="collection">
         <element label="Account" max_length="32" name="account" reference="x_poag_account_pot_account" type="reference"/>
         <element label="Comment" max_length="300" name="comment" type="string"/>
-        <element label="Solution" max_length="32" name="solution" reference="x_poag_account_pot_solution" type="reference"/>
+        <element display="true" label="Solution" max_length="32" name="solution" reference="x_poag_account_pot_solution" type="reference"/>
         <element choice="1" label="State" max_length="40" name="state" type="choice">
             <choice>
-                <element label="has" value="has"/>
-                <element label="needs" value="needs"/>
-                <element label="no" value="no"/>
+                <element label="has" sequence="0" value="has"/>
+                <element label="needs" sequence="1" value="needs"/>
+                <element label="replace" sequence="2" value="replace"/>
+                <element label="implement" sequence="3" value="implement"/>
+                <element label="had" sequence="4" value="had"/>
+                <element label="no" sequence="5" value="no"/>
+                <element label="provides" sequence="6" value="provides"/>
             </choice>
         </element>
         <index name="index">

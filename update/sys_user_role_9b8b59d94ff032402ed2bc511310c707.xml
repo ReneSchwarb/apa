@@ -12,7 +12,7 @@
         <sys_class_name>sys_user_role</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-02-06 16:42:11</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>9b8b59d94ff032402ed2bc511310c707</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>x_poag_account_pot_account_solution_task_user</sys_name>

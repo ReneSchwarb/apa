@@ -4,32 +4,47 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>challenge</element>
-            <list_id display_value="x_poag_account_pot_competitive_solution_for_challenge" element="NULL" name="x_poag_account_pot_competitive_solution_for_challenge" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">ceedc5624f6e22002ed2bc511310c7ad</list_id>
+            <list_id display_value="x_poag_account_pot_competitive_solution_for_challenge" element="NULL" name="x_poag_account_pot_competitive_solution_for_challenge" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">a14bea214ff403002ed2bc511310c720</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>0</position>
             <sum>false</sum>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2016-10-21 16:33:42</sys_created_on>
-            <sys_id>c2edc5624f6e22002ed2bc511310c7ae</sys_id>
+            <sys_created_by>rene.schwarb@ipt.ch</sys_created_by>
+            <sys_created_on>2017-08-25 13:20:08</sys_created_on>
+            <sys_id>a54bea214ff403002ed2bc511310c720</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2016-10-21 16:33:42</sys_updated_on>
+            <sys_updated_by>rene.schwarb@ipt.ch</sys_updated_by>
+            <sys_updated_on>2017-08-25 13:20:08</sys_updated_on>
         </sys_ui_list_element>
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>competitive_solution</element>
-            <list_id display_value="x_poag_account_pot_competitive_solution_for_challenge" element="NULL" name="x_poag_account_pot_competitive_solution_for_challenge" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">ceedc5624f6e22002ed2bc511310c7ad</list_id>
+            <list_id display_value="x_poag_account_pot_competitive_solution_for_challenge" element="NULL" name="x_poag_account_pot_competitive_solution_for_challenge" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">a14bea214ff403002ed2bc511310c720</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>1</position>
             <sum>false</sum>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2016-10-21 16:33:42</sys_created_on>
-            <sys_id>46edc5624f6e22002ed2bc511310c7ae</sys_id>
+            <sys_created_by>rene.schwarb@ipt.ch</sys_created_by>
+            <sys_created_on>2017-08-25 13:20:08</sys_created_on>
+            <sys_id>294bea214ff403002ed2bc511310c720</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2016-10-21 16:33:42</sys_updated_on>
+            <sys_updated_by>rene.schwarb@ipt.ch</sys_updated_by>
+            <sys_updated_on>2017-08-25 13:20:08</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>comment</element>
+            <list_id display_value="x_poag_account_pot_competitive_solution_for_challenge" element="NULL" name="x_poag_account_pot_competitive_solution_for_challenge" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">a14bea214ff403002ed2bc511310c720</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>rene.schwarb@ipt.ch</sys_created_by>
+            <sys_created_on>2017-08-25 13:20:08</sys_created_on>
+            <sys_id>a94bea214ff403002ed2bc511310c720</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>rene.schwarb@ipt.ch</sys_updated_by>
+            <sys_updated_on>2017-08-25 13:20:08</sys_updated_on>
         </sys_ui_list_element>
         <sys_ui_list action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
@@ -42,11 +57,11 @@
             <relationship/>
             <sum>false</sum>
             <sys_class_name>sys_ui_list</sys_class_name>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2016-10-21 16:33:42</sys_created_on>
+            <sys_created_by>rene.schwarb@ipt.ch</sys_created_by>
+            <sys_created_on>2017-08-25 13:20:08</sys_created_on>
             <sys_customer_update>true</sys_customer_update>
             <sys_domain>global</sys_domain>
-            <sys_id>ceedc5624f6e22002ed2bc511310c7ad</sys_id>
+            <sys_id>a14bea214ff403002ed2bc511310c720</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>x_poag_account_pot_competitive_solution_for_challenge</sys_name>
             <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
@@ -54,8 +69,8 @@
             <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
             <sys_update_name>sys_ui_list_x_poag_account_pot_competitive_solution_for_challenge_null</sys_update_name>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2016-10-21 16:33:42</sys_updated_on>
+            <sys_updated_by>rene.schwarb@ipt.ch</sys_updated_by>
+            <sys_updated_on>2017-08-25 13:20:08</sys_updated_on>
             <sys_user/>
             <view display_value="Default view" name="NULL">Default view</view>
             <view_name/>

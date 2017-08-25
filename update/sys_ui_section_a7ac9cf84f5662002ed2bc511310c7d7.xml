@@ -141,6 +141,34 @@
             <sys_user/>
             <type/>
         </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>description</element>
+            <position>10</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-03-03 18:26:23</sys_created_on>
+            <sys_id>5123e2554f55f6402ed2bc511310c7ea</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_poag_account_pot_contact" sys_domain="global" view="Default view">a7ac9cf84f5662002ed2bc511310c7d7</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-03-03 18:26:23</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>photo</element>
+            <position>11</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-03-21 18:59:21</sys_created_on>
+            <sys_id>7347dbcb4fa53e402ed2bc511310c7b9</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_poag_account_pot_contact" sys_domain="global" view="Default view">a7ac9cf84f5662002ed2bc511310c7d7</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-03-21 18:59:21</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
         <sys_ui_section action="INSERT_OR_UPDATE">
             <caption/>
             <header>false</header>
@@ -149,7 +177,7 @@
             <sys_class_name>sys_ui_section</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2016-10-03 16:13:34</sys_created_on>
-            <sys_customer_update>true</sys_customer_update>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_id>a7ac9cf84f5662002ed2bc511310c7d7</sys_id>
             <sys_mod_count>0</sys_mod_count>

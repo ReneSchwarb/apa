@@ -44,7 +44,7 @@
             <sys_class_name>sys_ui_list</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2016-10-07 04:42:48</sys_created_on>
-            <sys_customer_update>true</sys_customer_update>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_id>84f42abd4f96a2002ed2bc511310c7e2</sys_id>
             <sys_mod_count>0</sys_mod_count>

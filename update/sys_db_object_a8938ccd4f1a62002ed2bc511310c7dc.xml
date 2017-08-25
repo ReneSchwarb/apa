@@ -21,7 +21,7 @@
         <sys_class_name>sys_db_object</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-10-04 09:03:42</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>a8938ccd4f1a62002ed2bc511310c7dc</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Solution of Challenge</sys_name>

@@ -51,7 +51,7 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-12-18 11:07:23</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>010fea814f33a2002ed2bc511310c70b</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Trust Level</sys_name>

@@ -29,7 +29,7 @@
         <sys_class_name>sys_ui_list_control</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-12-27 12:27:45</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_id>c11851444f4836002ed2bc511310c72d</sys_id>
         <sys_mod_count>1</sys_mod_count>

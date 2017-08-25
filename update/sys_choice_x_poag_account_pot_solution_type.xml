@@ -55,6 +55,60 @@
             <sys_updated_on>2017-01-05 17:24:06</sys_updated_on>
             <value>Resource</value>
         </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Product Category</label>
+            <language>en</language>
+            <name>x_poag_account_pot_solution</name>
+            <sequence>3</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-02-27 07:01:36</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>270067bf4f01b6402ed2bc511310c7e4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-02-27 07:01:36</sys_updated_on>
+            <value>Product Category</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Technology</label>
+            <language>en</language>
+            <name>x_poag_account_pot_solution</name>
+            <sequence>4</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-02-27 07:01:36</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>e70067bf4f01b6402ed2bc511310c7e4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-02-27 07:01:36</sys_updated_on>
+            <value>Technology</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Method</label>
+            <language>en</language>
+            <name>x_poag_account_pot_solution</name>
+            <sequence>5</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-02-27 16:03:18</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>6a0c19c44f91b6402ed2bc511310c7fd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-02-27 16:03:18</sys_updated_on>
+            <value>Method</value>
+        </sys_choice>
         <sys_choice_set action="INSERT_OR_UPDATE">
             <element>type</element>
             <name>x_poag_account_pot_solution</name>
@@ -63,7 +117,7 @@
             <sys_created_on>2016-12-18 08:27:59</sys_created_on>
             <sys_customer_update>false</sys_customer_update>
             <sys_id>f8fa02c94fff62002ed2bc511310c744</sys_id>
-            <sys_mod_count>4</sys_mod_count>
+            <sys_mod_count>6</sys_mod_count>
             <sys_name>type</sys_name>
             <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
             <sys_policy/>
@@ -71,7 +125,7 @@
             <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
             <sys_update_name>sys_choice_x_poag_account_pot_solution_type</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-01-05 17:24:06</sys_updated_on>
+            <sys_updated_on>2017-02-27 16:03:18</sys_updated_on>
         </sys_choice_set>
     </sys_choice>
 </record_update>

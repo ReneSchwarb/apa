@@ -91,6 +91,24 @@
             <sys_updated_on>2016-12-27 12:30:34</sys_updated_on>
             <value>reference</value>
         </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>state</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>provides</label>
+            <language>en</language>
+            <name>x_poag_account_pot_account_and_topic</name>
+            <sequence>5</sequence>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-03-10 17:04:40</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_id>a8935aeb4f157a402ed2bc511310c7c1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-03-10 17:04:40</sys_updated_on>
+            <value>provides</value>
+        </sys_choice>
         <sys_choice_set action="INSERT_OR_UPDATE">
             <element>state</element>
             <name>x_poag_account_pot_account_and_topic</name>
@@ -99,7 +117,7 @@
             <sys_created_on>2016-12-27 12:28:30</sys_created_on>
             <sys_customer_update>false</sys_customer_update>
             <sys_id>af4811444f4836002ed2bc511310c771</sys_id>
-            <sys_mod_count>2</sys_mod_count>
+            <sys_mod_count>3</sys_mod_count>
             <sys_name>state</sys_name>
             <sys_package display_value="Account Potential Analyse" source="x_poag_account_pot">f6e0736c4f1662002ed2bc511310c7c0</sys_package>
             <sys_policy/>
@@ -107,7 +125,7 @@
             <sys_scope display_value="Account Potential Analyse">f6e0736c4f1662002ed2bc511310c7c0</sys_scope>
             <sys_update_name>sys_choice_x_poag_account_pot_account_and_topic_state</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2016-12-27 12:30:34</sys_updated_on>
+            <sys_updated_on>2017-03-10 17:04:40</sys_updated_on>
         </sys_choice_set>
     </sys_choice>
 </record_update>

@@ -2,6 +2,7 @@
 <database>
     <element label="Challenge of Role" max_length="40" name="x_poag_account_pot_challenge_of_role" type="collection">
         <element label="Challenge" max_length="32" name="challenge" reference="x_poag_account_pot_challenge" reference_floats="true" type="reference"/>
+        <element label="Comment" max_length="300" name="comment" type="string"/>
         <element label="Role" max_length="32" name="role" reference="x_poag_account_pot_role" reference_floats="true" type="reference"/>
         <index name="index">
             <element name="role"/>

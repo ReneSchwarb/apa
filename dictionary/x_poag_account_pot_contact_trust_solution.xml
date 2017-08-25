@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Contact Trust Solution" max_length="40" name="x_poag_account_pot_contact_trust_solution" type="collection">
+        <element label="Comment" max_length="200" name="comment" type="string"/>
+        <element label="Contact" max_length="32" name="contact" reference="x_poag_account_pot_contact" type="reference"/>
+        <element display="true" label="Solution" max_length="32" name="solution" reference="x_poag_account_pot_solution" type="reference"/>
+        <element label="Trust Level" max_length="32" name="trust_level" reference="x_poag_account_pot_trust_level" type="reference"/>
+        <element label="Value" max_length="1" name="value" type="integer"/>
+        <index name="index">
+            <element name="solution"/>
+        </index>
+        <index name="index2">
+            <element name="contact"/>
+        </index>
+        <index name="index3">
+            <element name="trust_level"/>
+        </index>
+    </element>
+</database>

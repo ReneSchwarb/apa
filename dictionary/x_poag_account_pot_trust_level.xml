@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Trust Level" max_length="40" name="x_poag_account_pot_trust_level" type="collection">
+        <element label="Comment" max_length="100" name="comment" type="string"/>
+        <element label="Name" max_length="40" name="name" type="string"/>
+        <element choice="1" label="Type" max_length="40" name="type" type="choice">
+            <choice>
+                <element label="Product" sequence="0" value="Product"/>
+                <element label="Brand" sequence="1" value="Brand"/>
+            </choice>
+        </element>
+        <element label="Value" max_length="40" name="value" type="string"/>
+    </element>
+</database>

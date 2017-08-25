@@ -51,7 +51,7 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-01-03 06:07:02</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>1183c81a4fc4b6002ed2bc511310c7f9</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Role</sys_name>

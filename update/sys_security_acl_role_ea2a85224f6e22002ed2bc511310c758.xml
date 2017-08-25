@@ -4,7 +4,7 @@
         <sys_class_name>sys_security_acl_role</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-10-21 16:17:21</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>ea2a85224f6e22002ed2bc511310c758</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>x_poag_account_pot_competitive_solution.x_poag_account_pot_competitive_solution_user</sys_name>

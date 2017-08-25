@@ -51,7 +51,7 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2016-12-13 12:01:28</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>09cb4dab4f6b22002ed2bc511310c708</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Visit City</sys_name>

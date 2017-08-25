@@ -19,5 +19,15 @@
         </element>
         <element label="description" max_length="200" name="description" type="string"/>
         <element display="true" label="Name" max_length="100" name="name" type="string"/>
+        <element choice="1" label="Type" max_length="40" name="type" type="choice">
+            <choice>
+                <element label="Partner" sequence="0" value="Partner"/>
+                <element label="Competitor" sequence="1" value="Competitor"/>
+                <element label="Customer" sequence="2" value="Customer"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="name"/>
+        </index>
     </element>
 </database>
